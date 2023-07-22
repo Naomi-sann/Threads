@@ -3,17 +3,17 @@
   "name": "Threads app clone",
   "icons": [
     {
-      "src": "threads-32",
+      "src": "logo/32x32/threads-cube.png",
       "sizes": "32x32",
       "type": "image/png"
     },
     {
-      "src": "threads-128.png",
+      "src": "logo/128x128/threads-cube.png",
       "type": "image/png",
       "sizes": "128x128"
     },
     {
-      "src": "threads-512.png",
+      "src": "logo/Instagram Threads.png",
       "type": "image/png",
       "sizes": "512x512"
     }

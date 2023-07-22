@@ -6,10 +6,8 @@ const datas: TDatas = {
         name: "",
         username: "",
         follows: {
-            followers: [""],
-            followersCount: 123,
-            followings: [""],
-            followingsCount: 23,
+            followers: [],
+            followings: [],
         },
         threads: [],
         isVerified: true,
@@ -17,18 +15,15 @@ const datas: TDatas = {
     threads: [
         {
             id: "",
-            poster: "",
+            publisher: {
+                username: "dawcdwa",
+                picture: "",
+                id: "",
+            },
             content: "wdcwa",
             likes: 12,
-            replies: [
-                {
-                    id: "",
-                    poster: "",
-                    content: "",
-                    likes: 2,
-                    replies: [],
-                }
-            ],
+            date: "",
+            replies: [],
         }
     ]
 }

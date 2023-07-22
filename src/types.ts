@@ -9,10 +9,8 @@ interface IUser {
     username: string;
     picture?: string;
     follows: {
-        followers: string[];
-        followersCount: number;
-        followings: string[];
-        followingsCount: number;
+        followers: IUser[];
+        followings: IUser[];
     }
     threads: IThread[];
     isVerified?: boolean;
@@ -20,13 +18,17 @@ interface IUser {
 
 // base type for a thread(post), comment, etc
 
+// contains a shorter properties of user type
+type TReplier = Omit<IUser, "threads" | "follows" | "name">;
+
 // Thread(post) object type
 interface IThread {
     readonly id: string;
-    poster: string;
+    publisher: TReplier;
     content: string;
     likes: number;
-    replies: IThread[];
+    date: string;
+    replies: TReplier[];
 }
 
 // base app data type
