@@ -2,7 +2,7 @@
  the file contains all the global (shared) types 
 */
 
-// User object type
+/* User object type */
 interface IUser {
     readonly id: string;
     name: string;
@@ -16,22 +16,24 @@ interface IUser {
     isVerified?: boolean;
 }
 
-// base type for a thread(post), comment, etc
-
-// contains a shorter properties of user type
+/* 
+ contains a shorter properties of user type
+*/
 type TReplier = Omit<IUser, "threads" | "follows" | "name">;
 
-// Thread(post) object type
+/* Thread(post) object type */
 interface IThread {
     readonly id: string;
     publisher: TReplier;
     content: string;
+    pictures: string[];
     likes: number;
     date: string;
+    AddedThreads?: IThread[];
     replies: TReplier[];
 }
 
-// base app data type
+/* base app data type */
 type TDatas = {
     currentUser: IUser;
     threads: IThread[]

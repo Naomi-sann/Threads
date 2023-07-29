@@ -1,7 +1,7 @@
 import App from "@/App";
 import Home from "@/pages/Home";
 import Search from "@/pages/Search";
-import Thread from "@/pages/WriteThread";
+import Thread from "@/pages/NewThread";
 import Activity from "@/pages/Activity";
 import Profile from "@/pages/Profile";
 import NotFound from "@/pages/NotFound";
@@ -27,7 +27,7 @@ const routes: RouteObject[] = [
         element: <Search />,
       },
       {
-        path: "/thread",
+        path: "/new-thread",
         element: <Thread />,
       },
       {

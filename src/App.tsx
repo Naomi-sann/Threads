@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import "./App.css";
 import useWindowDimensions from "./hooks/useWindowDimensions";
 import DesktopTemplate from "@/templates/DesktopTemplate";
 import MobileTemplate from "@/templates/MobileTemplate";
@@ -12,7 +11,7 @@ function App() {
     const loading = document.getElementById("loading") as HTMLDivElement;
 
     setTimeout(() => {
-      loading.style.animation = "fade .5s ease forwards";
+      loading.classList.add("animate-fade-out");
 
       loading.addEventListener("animationend", () => {
         loading.remove();

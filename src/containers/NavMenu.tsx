@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import {
   heartIcon,
   homeIcon,
@@ -5,9 +7,7 @@ import {
   userIcon,
   writeIcon,
 } from "@/assets/icons/Icons";
-import { Link, useLocation } from "react-router-dom";
 import { checkPaths } from "@/utils/utils";
-import { useState } from "react";
 
 const navItems: {
   path: string | string[];
@@ -26,7 +26,7 @@ const navItems: {
     },
   },
   {
-    path: "/thread",
+    path: "/new-thread",
     icon(isActive, fillColor) {
       return writeIcon(isActive, fillColor);
     },
@@ -59,8 +59,6 @@ const NavMenu = () => {
     setIsItemActive({ index, isActive: false });
   }
 
-  console.log("render");
-
   return (
     <section className="w-full h-[75px] absolute bottom-0 bg-white">
       <nav className="h-full">
@@ -78,7 +76,9 @@ const NavMenu = () => {
                 onMouseUp={() => handleMouseUp(index)}
                 onMouseLeave={() =>
                   isItemActive ? handleMouseUp(index) : undefined
-                }>
+                }
+                onTouchStart={() => handleMouseDown(index)}
+                onTouchEnd={() => handleMouseUp(index)}>
                 {icon(
                   checkPaths(path, pathname) ||
                     (isItemActive?.index === index && isItemActive.isActive)

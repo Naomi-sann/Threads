@@ -20,11 +20,11 @@ function onResize(callOnLength: number, callback: Function) {
     })
 }
 
-export default function useWindowDimensions(): TDimensions {
+export default function useWindowDimensions(lengthChange: number = 10): TDimensions {
     const [dimensions, setDimensions] = useState({ x: window.innerWidth, y: window.innerHeight })
 
     useLayoutEffect(() => {
-        onResize(10, () => {
+        onResize(lengthChange, () => {
             setDimensions({ x: window.innerWidth, y: window.innerHeight })
         });
     }, [])

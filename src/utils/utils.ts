@@ -21,7 +21,7 @@ function checkPaths(path: string | string[], currentPath: string) {
 
     if (Array.isArray(path)) {
         for (const p of path) {
-            return isEqualPath(p);
+            if (isEqualPath(p)) return true;
         }
     }
     else {

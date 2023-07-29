@@ -23,6 +23,7 @@ const datas: TDatas = {
             content: "wdcwa",
             likes: 12,
             date: "",
+            pictures: [],
             replies: [],
         }
     ]
