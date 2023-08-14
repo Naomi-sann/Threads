@@ -1,0 +1,25 @@
+{
+  "short_name": "Threads",
+  "name": "Threads app clone",
+  "icons": [
+    {
+      "src": "logo/32x32/threads-cube.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "logo/128x128/threads-cube.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "logo/Instagram Threads.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

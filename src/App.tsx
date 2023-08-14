@@ -15,7 +15,6 @@ function App() {
 
       loading.addEventListener("animationend", () => {
         loading.remove();
-        console.log("haha");
       });
     }, 500);
   }, []);

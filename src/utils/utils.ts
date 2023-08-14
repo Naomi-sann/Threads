@@ -45,11 +45,12 @@ type TCursorPosition = Record<"x" | "y", number>;
 function getMultiDeviceCursorPosition(e: (MouseEvent | TouchEvent) | (React.MouseEvent | React.TouchEvent)): TCursorPosition {
     const event = e as Event;
 
-    console.log((event as TouchEvent | React.TouchEvent).touches && (event as TouchEvent | React.TouchEvent).touches.item(0));
-
-
     if (event.type.startsWith("mouse")) return { x: (event as (MouseEvent | React.MouseEvent)).pageX, y: (event as (MouseEvent | React.MouseEvent)).pageY }
-    else if (event.type.startsWith("touch") && (event as TouchEvent | React.TouchEvent).touches[0]) return { x: (event as (TouchEvent | React.TouchEvent)).touches[0].pageX, y: (event as (TouchEvent | React.TouchEvent)).touches[0].pageY }
+    else if (event.type.startsWith("touch") && (event as TouchEvent | React.TouchEvent).touches[0]) {
+
+        return { x: (event as (TouchEvent | React.TouchEvent)).touches[0].pageX, y: (event as (TouchEvent | React.TouchEvent)).touches[0].pageY }
+    }
+    console.log(event);
 
     return { x: 0, y: 0 }
 }

@@ -5,7 +5,7 @@ interface IImageSliderProps {
   pictures: string[];
 }
 
-type TTargetImageState = Record<"width" | "height" | "top" | "left", number>;
+type TTargetImageState = Record<"width" | "top" | "left", number>;
 
 let isGrabbed = false;
 let startPosition = 0;
@@ -13,7 +13,7 @@ let grabPosition = 0;
 let positionCopy = 0;
 
 function closeImage(
-  { width, height, top, left }: TTargetImageState,
+  { width, top, left }: TTargetImageState,
   onClose: () => void
 ): void {
   const openedImage = document.getElementById("picture-view")
@@ -42,46 +42,20 @@ function handleImageSlideClose(
   },
   target: TTargetImageState
 ): void {
-  let grabPosition: { x: number; y: number } = { x: 0, y: 0 };
+  type Position = { x: number; y: number };
+
+  let grabPosition: Position = { x: 0, y: 0 };
+  const movePosition: Position = { x: 0, y: 0 };
   let isHolding = false;
   let isReset = true;
 
   const handleDown = (e: MouseEvent | TouchEvent) => {
     const pos = getMultiDeviceCursorPosition(e);
     isHolding = true;
+
     grabPosition = {
       x: parseFloat(pos.x.toFixed(2)),
       y: parseFloat(pos.y.toFixed(2)),
-    };
-  };
-  const handleUp = (e: MouseEvent | TouchEvent) => {
-    const { x, y } = getMultiDeviceCursorPosition(e);
-
-    const yShift = grabPosition.y - y;
-    const xShift = grabPosition.x - x;
-
-    let maxShift = 250;
-
-    if (
-      xShift > maxShift ||
-      xShift < -maxShift ||
-      yShift > maxShift ||
-      yShift < -maxShift
-    ) {
-      imgContainer.style.backgroundColor = "rgba(0,0,0,0)";
-      closeImage(target, () => {
-        imgContainer.remove();
-        targetImage.classList.remove("opacity-0");
-      });
-    }
-
-    isHolding = isReset = false;
-    img.className += " transition-[left,top] duration-500";
-    img.style.top = img.style.left = "50%";
-    img.ontransitionend = () => {
-      img.classList.remove("transition-[left,top]");
-      img.classList.remove("duration-500");
-      isReset = true;
     };
   };
   const handleMove = (e: MouseEvent | TouchEvent) => {
@@ -89,21 +63,50 @@ function handleImageSlideClose(
 
     const { x, y } = getMultiDeviceCursorPosition(e);
 
-    const yShift = grabPosition.y - y;
-    const xShift = grabPosition.x - x;
+    const yShift = (movePosition.x = grabPosition.y - y);
+    const xShift = (movePosition.y = grabPosition.x - x);
 
     img.style.top = window.innerHeight / 2 + -yShift + "px";
     img.style.left = window.innerWidth / 2 + -xShift + "px";
-  };
 
+    imgContainer.addEventListener("mouseleave", handleUp);
+    imgContainer.addEventListener("touchcancel", handleUp);
+  };
+  const handleUp = (): void => {
+    const { x, y } = movePosition;
+    const maxShift = 250;
+
+    const resetChanges = () => {
+      isHolding = isReset = false;
+      img.className += " transition-[left,top] duration-500";
+      img.ontransitionend = () => {
+        img.classList.remove("transition-[left,top]");
+        img.classList.remove("duration-500");
+        isReset = true;
+      };
+    };
+
+    resetChanges();
+
+    if (x > maxShift || x < -maxShift || y > maxShift || y < -maxShift) {
+      imgContainer.style.backgroundColor = "rgba(0,0,0,0)";
+
+      closeImage(target, () => {
+        targetImage.classList.remove("opacity-0");
+        imgContainer.remove();
+      });
+      return;
+    }
+    img.style.top = img.style.left = "50%";
+    imgContainer.removeEventListener("mouseleave", handleUp);
+    imgContainer.removeEventListener("touchcancel", handleUp);
+  };
   img.addEventListener("mousedown", handleDown);
   img.addEventListener("touchstart", handleDown);
   img.addEventListener("mouseup", handleUp);
   img.addEventListener("touchend", handleUp);
   imgContainer.addEventListener("mousemove", handleMove);
   imgContainer.addEventListener("touchmove", handleMove);
-  imgContainer.addEventListener("mouseleave", handleUp);
-  imgContainer.addEventListener("touchcancel", handleUp);
 }
 
 function openImage(e: React.MouseEvent<HTMLImageElement>): void {
@@ -121,15 +124,11 @@ function openImage(e: React.MouseEvent<HTMLImageElement>): void {
   imgContainer.id = "picture-view";
   imgContainer.className = `fixed left-0 top-0 w-full h-full bg-black animate-fade-in z-10 transition-[background-color] duration-[350ms]`;
 
-  img.className = `absolute max-w-[100dvh] rounded-xl will-change-[width,border-radius,left,top,transform] z-10 cursor-grab select-none animate-place-center`;
+  img.className = `absolute max-w-[90dvh] rounded-xl will-change-[width,border-radius,left,top,transform] z-10 cursor-grab select-none animate-place-center`;
 
   img.style.width = target.clientWidth + "px";
   img.style.top = top + "px";
   img.style.left = left + "px";
-
-  imgContainer.addEventListener("animationend", () => {
-    imgContainer.classList.replace("animate-fade-in", "bg-[rgba(0,0,0,1)]");
-  });
 
   function handleImgOpened() {
     img.style.top = "50%";
@@ -147,7 +146,6 @@ function openImage(e: React.MouseEvent<HTMLImageElement>): void {
             top,
             left,
             width: target.clientWidth,
-            height: target.clientHeight,
           },
           () => {
             target.classList.remove("opacity-0");
@@ -157,7 +155,11 @@ function openImage(e: React.MouseEvent<HTMLImageElement>): void {
       }
     }
 
+    imgContainer.addEventListener("animationend", () => {
+      imgContainer.classList.replace("animate-fade-in", "bg-[rgba(0,0,0,1)]");
+    });
     imgContainer.addEventListener("click", handleBackgroundClick);
+
     handleImageSlideClose(
       target,
       { img, imgContainer },
@@ -165,11 +167,9 @@ function openImage(e: React.MouseEvent<HTMLImageElement>): void {
         top,
         left,
         width: target.clientWidth,
-        height: target.clientHeight,
       }
     );
   }
-
   img.addEventListener("animationend", handleImgOpened);
 
   imgContainer.appendChild(img);
@@ -235,7 +235,7 @@ const ImageSlider = ({ pictures }: IImageSliderProps) => {
   }, []);
 
   return (
-    <div className="w-full select-none">
+    <div className="w-full select-none hehe">
       <div
         className="flex gap-2 will-change-transform"
         style={{ transform: `translateX(-${position}px)` }}>

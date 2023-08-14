@@ -30,7 +30,7 @@ export default {
         "place-center": {
           to: {
             width: "100%",
-            "max-width": "100dvh",
+            "max-width": "90dvh",
             "border-radius": "0",
           },
         },
