@@ -1,183 +1,22 @@
-import { getMultiDeviceCursorPosition } from "@/utils/utils";
 import { useState, useRef, useEffect } from "react";
+import { getMultiDeviceCursorPosition } from "@/utils/utils";
+import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
+import { openImage } from "@/features/imagePreviewSlice";
 
 interface IImageSliderProps {
   pictures: string[];
 }
-
-type TTargetImageState = Record<"width" | "top" | "left", number>;
 
 let isGrabbed = false;
 let startPosition = 0;
 let grabPosition = 0;
 let positionCopy = 0;
 
-function closeImage(
-  { width, top, left }: TTargetImageState,
-  onClose: () => void
-): void {
-  const openedImage = document.getElementById("picture-view")
-    ?.firstChild as HTMLImageElement;
-
-  openedImage.className +=
-    " transition-[left,top,width,transform,height,border-radius] duration-500";
-  openedImage.style.width = width + "px";
-  openedImage.style.left = `${left}px`;
-  openedImage.style.top = `${top}px`;
-  openedImage.style.transform = "";
-  openedImage.style.borderRadius = "12px";
-  openedImage.ontransitionend = () => {
-    onClose();
-  };
-}
-
-function handleImageSlideClose(
-  targetImage: HTMLImageElement,
-  {
-    img,
-    imgContainer,
-  }: {
-    img: HTMLImageElement;
-    imgContainer: HTMLDivElement;
-  },
-  target: TTargetImageState
-): void {
-  type Position = { x: number; y: number };
-
-  let grabPosition: Position = { x: 0, y: 0 };
-  const movePosition: Position = { x: 0, y: 0 };
-  let isHolding = false;
-  let isReset = true;
-
-  const handleDown = (e: MouseEvent | TouchEvent) => {
-    const pos = getMultiDeviceCursorPosition(e);
-    isHolding = true;
-
-    grabPosition = {
-      x: parseFloat(pos.x.toFixed(2)),
-      y: parseFloat(pos.y.toFixed(2)),
-    };
-  };
-  const handleMove = (e: MouseEvent | TouchEvent) => {
-    if (!isHolding || !isReset) return;
-
-    const { x, y } = getMultiDeviceCursorPosition(e);
-
-    const yShift = (movePosition.x = grabPosition.y - y);
-    const xShift = (movePosition.y = grabPosition.x - x);
-
-    img.style.top = window.innerHeight / 2 + -yShift + "px";
-    img.style.left = window.innerWidth / 2 + -xShift + "px";
-
-    imgContainer.addEventListener("mouseleave", handleUp);
-    imgContainer.addEventListener("touchcancel", handleUp);
-  };
-  const handleUp = (): void => {
-    const { x, y } = movePosition;
-    const maxShift = 250;
-
-    const resetChanges = () => {
-      isHolding = isReset = false;
-      img.className += " transition-[left,top] duration-500";
-      img.ontransitionend = () => {
-        img.classList.remove("transition-[left,top]");
-        img.classList.remove("duration-500");
-        isReset = true;
-      };
-    };
-
-    resetChanges();
-
-    if (x > maxShift || x < -maxShift || y > maxShift || y < -maxShift) {
-      imgContainer.style.backgroundColor = "rgba(0,0,0,0)";
-
-      closeImage(target, () => {
-        targetImage.classList.remove("opacity-0");
-        imgContainer.remove();
-      });
-      return;
-    }
-    img.style.top = img.style.left = "50%";
-    imgContainer.removeEventListener("mouseleave", handleUp);
-    imgContainer.removeEventListener("touchcancel", handleUp);
-  };
-  img.addEventListener("mousedown", handleDown);
-  img.addEventListener("touchstart", handleDown);
-  img.addEventListener("mouseup", handleUp);
-  img.addEventListener("touchend", handleUp);
-  imgContainer.addEventListener("mousemove", handleMove);
-  imgContainer.addEventListener("touchmove", handleMove);
-}
-
-function openImage(e: React.MouseEvent<HTMLImageElement>): void {
-  if (isGrabbed) return;
-  const target = e.target as HTMLImageElement;
-  const { top, left } = target.getBoundingClientRect();
-
-  const imgContainer = document.createElement("div");
-  const img = document.createElement("img");
-  img.src = target.src;
-  img.draggable = false;
-
-  target.classList.add("opacity-0");
-
-  imgContainer.id = "picture-view";
-  imgContainer.className = `fixed left-0 top-0 w-full h-full bg-black animate-fade-in z-10 transition-[background-color] duration-[350ms]`;
-
-  img.className = `absolute max-w-[90dvh] rounded-xl will-change-[width,border-radius,left,top,transform] z-10 cursor-grab select-none animate-place-center`;
-
-  img.style.width = target.clientWidth + "px";
-  img.style.top = top + "px";
-  img.style.left = left + "px";
-
-  function handleImgOpened() {
-    img.style.top = "50%";
-    img.style.left = "50%";
-    img.style.transform = "translate(-50%, -50%)";
-    img.style.width = "100%";
-    img.style.borderRadius = "0";
-    img.classList.remove("animate-place-center");
-
-    function handleBackgroundClick(e: Event) {
-      if ((e.target as HTMLDivElement).tagName !== "IMG") {
-        imgContainer.style.backgroundColor = "rgba(0,0,0,0)";
-        closeImage(
-          {
-            top,
-            left,
-            width: target.clientWidth,
-          },
-          () => {
-            target.classList.remove("opacity-0");
-            imgContainer.remove();
-          }
-        );
-      }
-    }
-
-    imgContainer.addEventListener("animationend", () => {
-      imgContainer.classList.replace("animate-fade-in", "bg-[rgba(0,0,0,1)]");
-    });
-    imgContainer.addEventListener("click", handleBackgroundClick);
-
-    handleImageSlideClose(
-      target,
-      { img, imgContainer },
-      {
-        top,
-        left,
-        width: target.clientWidth,
-      }
-    );
-  }
-  img.addEventListener("animationend", handleImgOpened);
-
-  imgContainer.appendChild(img);
-  document.body.appendChild(imgContainer);
-}
-
 const ImageSlider = ({ pictures }: IImageSliderProps) => {
   const [position, setPosition] = useState(1);
+
+  const openedPictureSource = useAppSelector((state) => state.imagePreview.src);
+  const dispatch = useAppDispatch();
 
   const imageRef = useRef<HTMLImageElement>(null);
 
@@ -218,6 +57,24 @@ const ImageSlider = ({ pictures }: IImageSliderProps) => {
     if (isGrabbed) isGrabbed = false;
   };
 
+  const handleClick = (
+    event: React.MouseEvent<HTMLDivElement>,
+    picture: string
+  ) => {
+    const target = event.target as HTMLImageElement;
+
+    const { top, left } = target.getBoundingClientRect();
+
+    dispatch(
+      openImage({
+        position: { x: left, y: top },
+        src: picture,
+        width: target.clientWidth,
+        height: target.clientHeight,
+      })
+    );
+  };
+
   useEffect(() => {
     document.addEventListener("mousemove", handleMove);
     document.addEventListener("mouseup", handleUp);
@@ -244,11 +101,13 @@ const ImageSlider = ({ pictures }: IImageSliderProps) => {
             <img
               src={pic}
               alt="content_picture"
-              className="thread-picture rounded-xl transition-transform ease-linear duration-100 active:scale-90 max-w-[clamp(200px,75vw,375px)] w-fit cursor-grab active:cursor-grabbing"
+              className={`thread-picture rounded-xl transition-transform ease-linear duration-100 active:scale-90 max-w-[clamp(200px,75vw,375px)] w-fit cursor-grab active:cursor-grabbing ${
+                openedPictureSource === pic ? "opacity-0" : ""
+              }`}
               draggable="false"
               key={index}
               ref={imageRef}
-              onClick={openImage}
+              onClick={(e) => handleClick(e, pic)}
               onMouseDown={handleDown}
               onTouchStart={handleDown}
               onTouchEnd={handleUp}

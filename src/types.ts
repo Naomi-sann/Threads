@@ -40,4 +40,7 @@ type TDatas = {
     threads: IThread[]
 }
 
-export type { TDatas, IUser, IThread }
+/* a coordinate type for mostly animations */
+type TPosition = { x: number, y: number };
+
+export type { TDatas, IUser, IThread, TPosition }

@@ -2,9 +2,14 @@ import { useEffect } from "react";
 import useWindowDimensions from "./hooks/useWindowDimensions";
 import DesktopTemplate from "@/templates/DesktopTemplate";
 import MobileTemplate from "@/templates/MobileTemplate";
+import { useAppSelector } from "@/hooks/useReduxHooks";
+import ImagePreview from "./components/ImagePreview";
 
 function App() {
   const dimensions = useWindowDimensions();
+  const isImageShowing = useAppSelector(
+    (state) => state.imagePreview.isShowing
+  );
 
   useEffect(() => {
     // remove loading
@@ -22,6 +27,7 @@ function App() {
   return (
     <div className="w-full h-[100svh]">
       {dimensions.x > 1000 ? <DesktopTemplate /> : <MobileTemplate />}
+      {isImageShowing && <ImagePreview />}
     </div>
   );
 }
