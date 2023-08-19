@@ -1,7 +1,15 @@
+import type { MouseEvent, TouchEvent } from "react";
+import type { TPosition } from "@/types";
 import { animated, useSpring, easings } from "@react-spring/web";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { closeImage } from "@/features/imagePreviewSlice";
+import { getMultiDeviceCursorPosition } from "@/utils/utils";
+
+let isGrabbed = false;
+let grabPosition: TPosition = { x: 0, y: 0 };
+let xShift = 0;
+let yShift = 0;
 
 function ImagePreview() {
   const dimensions = useWindowDimensions();
@@ -21,7 +29,7 @@ function ImagePreview() {
       duration: 150,
     },
   }));
-  const [springs, api] = useSpring(
+  const [image, imageApi] = useSpring(
     () => ({
       from: {
         x: position.x - 9,
@@ -49,15 +57,15 @@ function ImagePreview() {
 
   const dispatch = useAppDispatch();
 
-  const handleClick = (e: React.MouseEvent) => {
-    if ((e.target as Element).id === "thread-image") return;
+  const handleClose = () => {
+    isGrabbed = false;
 
     opacityApi.start({
       to: {
         backgroundColor: "rgba(0,0,0,0)",
       },
     });
-    api.start({
+    imageApi.start({
       to: {
         x: position.x - 10,
         y: position.y - 8,
@@ -75,6 +83,49 @@ function ImagePreview() {
     });
   };
 
+  const handleDown = (e: MouseEvent | TouchEvent) => {
+    isGrabbed = true;
+
+    grabPosition = getMultiDeviceCursorPosition(e);
+  };
+
+  const handleUp = () => {
+    if (xShift > 250 || xShift < -250 || yShift > 250 || yShift < -250) {
+      handleClose();
+      return;
+    }
+
+    imageApi.start({
+      to: {
+        x: dimensions.x / 2,
+        y: dimensions.y / 2,
+      },
+      config: { duration: 200 },
+    });
+
+    isGrabbed = false;
+  };
+
+  const handleMove = (e: MouseEvent | TouchEvent) => {
+    if (!isGrabbed) return;
+
+    const position: TPosition = getMultiDeviceCursorPosition(e);
+
+    xShift = position.x - grabPosition.x;
+    yShift = position.y - grabPosition.y;
+
+    imageApi.set({
+      x: xShift + dimensions.x / 2,
+      y: yShift + dimensions.y / 2,
+    });
+  };
+
+  const handleClick = (e: MouseEvent) => {
+    if ((e.target as Element).id === "thread-image") return;
+
+    handleClose();
+  };
+
   return (
     <animated.div
       style={{
@@ -82,7 +133,9 @@ function ImagePreview() {
         inset: 0,
         ...opacity,
       }}
-      onClick={handleClick}>
+      onClick={handleClick}
+      onMouseLeave={handleUp}
+      onTouchCancel={handleUp}>
       <animated.img
         id="thread-image"
         src={src}
@@ -90,10 +143,16 @@ function ImagePreview() {
           maxWidth: "90dvh",
           cursor: "grab",
           userSelect: "none",
-          ...springs,
+          ...image,
         }}
         alt="this is a test"
         draggable="false"
+        onMouseDown={handleDown}
+        onTouchStart={handleDown}
+        onMouseMove={handleMove}
+        onTouchMove={handleMove}
+        onMouseUp={handleUp}
+        onTouchEnd={handleUp}
       />
     </animated.div>
   );
