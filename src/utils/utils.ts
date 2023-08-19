@@ -10,6 +10,8 @@
  * 
 **/
 
+import { TPosition } from "@/types";
+
 function checkPaths(path: string | string[], currentPath: string): boolean;
 function checkPaths(path: string | string[], currentPath: string) {
     const isEqualPath = (p: string) => {
@@ -40,9 +42,7 @@ function checkPaths(path: string | string[], currentPath: string) {
  * pass the Mouse | touch event to receive an object of current x, y position
  */
 
-type TCursorPosition = Record<"x" | "y", number>;
-
-function getMultiDeviceCursorPosition(e: (MouseEvent | TouchEvent) | (React.MouseEvent | React.TouchEvent)): TCursorPosition {
+function getMultiDeviceCursorPosition(e: (MouseEvent | TouchEvent) | (React.MouseEvent | React.TouchEvent)): TPosition {
     const event = e as Event;
 
     if (event.type.startsWith("mouse")) return { x: (event as (MouseEvent | React.MouseEvent)).pageX, y: (event as (MouseEvent | React.MouseEvent)).pageY }
