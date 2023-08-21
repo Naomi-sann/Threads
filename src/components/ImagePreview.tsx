@@ -67,8 +67,8 @@ function ImagePreview() {
     });
     imageApi.start({
       to: {
-        x: position.x - 10,
-        y: position.y - 8,
+        x: position.x,
+        y: position.y,
         width,
         transform: "translate(0%,0%)",
         borderRadius: 12,
@@ -141,11 +141,10 @@ function ImagePreview() {
         src={src}
         style={{
           maxWidth: "90dvh",
-          cursor: "grab",
           userSelect: "none",
           ...image,
         }}
-        alt="this is a test"
+        alt="thread picture"
         draggable="false"
         onMouseDown={handleDown}
         onTouchStart={handleDown}
@@ -153,6 +152,7 @@ function ImagePreview() {
         onTouchMove={handleMove}
         onMouseUp={handleUp}
         onTouchEnd={handleUp}
+        className="cursor-grab active:cursor-grabbing"
       />
     </animated.div>
   );

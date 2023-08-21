@@ -10,9 +10,10 @@ interface IImageSliderProps {
 let isGrabbed = false;
 let startPosition = 0;
 let grabPosition = 0;
+let grabPositionCopy = 0;
 let positionCopy = 0;
 
-const ImageSlider = ({ pictures }: IImageSliderProps) => {
+const ImageSlider = ({ pictures }: IImageSliderProps): JSX.Element => {
   const [position, setPosition] = useState(1);
 
   const openedPictureSource = useAppSelector((state) => state.imagePreview.src);
@@ -26,6 +27,7 @@ const ImageSlider = ({ pictures }: IImageSliderProps) => {
     if (!(e.target as Element).classList.contains("thread-picture")) return;
     isGrabbed = true;
     startPosition = getMultiDeviceCursorPosition(e).x;
+    grabPositionCopy = positionCopy;
   };
 
   const handleMove = (e: MouseEvent | TouchEvent) => {
@@ -107,7 +109,11 @@ const ImageSlider = ({ pictures }: IImageSliderProps) => {
               draggable="false"
               key={index}
               ref={imageRef}
-              onClick={(e) => handleClick(e, pic)}
+              onClick={(e) =>
+                position - grabPositionCopy <= 50 &&
+                position - grabPositionCopy >= -50 &&
+                handleClick(e, pic)
+              }
               onMouseDown={handleDown}
               onTouchStart={handleDown}
               onTouchEnd={handleUp}
