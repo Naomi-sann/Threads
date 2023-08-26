@@ -11,11 +11,32 @@ const threads: IThread[] = [
       picture: "/src/assets/images/2feff08e009724a3f8c750a01185ecd3.jpg",
       isVerified: true,
     },
-    content: "The threads app is making me outhshine bightly",
+    content: "its awesome",
     pictures: [],
     likes: 12,
     date: "3m",
-    replies: [],
+    replies: [
+      {
+        id: "wacda",
+        username: "HaHa",
+        isVerified: false,
+        picture:
+          "/src/assets/images/__angel_devil_chainsaw_man_drawn_by_champi__sample-a5f848a25440e1d9c9f472adc1e061cf.jpg",
+      },
+      {
+        id: "wacda",
+        username: "HaHa",
+        isVerified: false,
+        picture: "/src/assets/images/cities-in-switzerland-1920x1080.webp",
+      },
+      {
+        id: "wacda",
+        username: "HaHa",
+        isVerified: false,
+        picture:
+          "/src/assets/images/avatars-Ywx1lArS4ahFDVws-K24FuA-t500x500.jpg",
+      },
+    ],
   },
   {
     id: "TEST_2",

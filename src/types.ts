@@ -43,4 +43,4 @@ type TDatas = {
 /* a coordinate type for mostly animations */
 type TPosition = { x: number, y: number };
 
-export type { TDatas, IUser, IThread, TPosition }
+export type { TDatas, IUser, IThread, TPosition, TReplier }
