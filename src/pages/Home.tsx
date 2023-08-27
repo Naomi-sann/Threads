@@ -8,7 +8,10 @@ const threads: IThread[] = [
     publisher: {
       id: "",
       username: "kobeni",
-      picture: "/src/assets/images/2feff08e009724a3f8c750a01185ecd3.jpg",
+      picture: new URL(
+        "/src/assets/images/2feff08e009724a3f8c750a01185ecd3.jpg",
+        import.meta.url
+      ).href,
       isVerified: true,
     },
     content: "its awesome",
@@ -20,21 +23,28 @@ const threads: IThread[] = [
         id: "wacda",
         username: "HaHa",
         isVerified: false,
-        picture:
+        picture: new URL(
           "/src/assets/images/__angel_devil_chainsaw_man_drawn_by_champi__sample-a5f848a25440e1d9c9f472adc1e061cf.jpg",
+          import.meta.url
+        ).href,
       },
       {
         id: "wacda",
         username: "HaHa",
         isVerified: false,
-        picture: "/src/assets/images/cities-in-switzerland-1920x1080.webp",
+        picture: new URL(
+          "/src/assets/images/cities-in-switzerland-1920x1080.webp",
+          import.meta.url
+        ).href,
       },
       {
         id: "wacda",
         username: "HaHa",
         isVerified: false,
-        picture:
+        picture: new URL(
           "/src/assets/images/avatars-Ywx1lArS4ahFDVws-K24FuA-t500x500.jpg",
+          import.meta.url
+        ).href,
       },
     ],
   },
@@ -43,8 +53,11 @@ const threads: IThread[] = [
     publisher: {
       id: "",
       username: "marin_kitagawa",
-      picture:
+      picture: new URL(
         "/src/assets/images/308226132_123324800493904_7027576226844336253_n.jpg",
+        import.meta.url
+      ).href,
+
       isVerified: false,
     },
     content: "good morning everyone! having a great day at @google",
@@ -58,13 +71,27 @@ const threads: IThread[] = [
     publisher: {
       id: "",
       username: "lucy",
-      picture: "/src/assets/images/4a207a19f6b74f2b457e9a500174b928.jpg",
+      picture: new URL(
+        "/src/assets/images/4a207a19f6b74f2b457e9a500174b928.jpg",
+        import.meta.url
+      ).href,
     },
     content: "one of the best video games i've ever played was made by @EA :*)",
     pictures: [
-      "/src/assets/images/Need for Speed™ Most Wanted 2023-07-20 20-45-59.00_00_28_25.Still007.png",
-      "/src/assets/images/Need for Speed™ Most Wanted 2023-07-20 20-45-59.00_00_33_09.Still002.png",
-      "/src/assets/images/Need for Speed™ Most Wanted 2023-07-20 20-45-59.00_01_30_23.Still003.png",
+      new URL(
+        "/src/assets/images/Need for Speed™ Most Wanted 2023-07-20 20-45-59.00_00_28_25.Still007.png",
+        import.meta.url
+      ).href,
+
+      new URL(
+        "/src/assets/images/Need for Speed™ Most Wanted 2023-07-20 20-45-59.00_00_33_09.Still002.png",
+        import.meta.url
+      ).href,
+
+      new URL(
+        "/src/assets/images/Need for Speed™ Most Wanted 2023-07-20 20-45-59.00_01_30_23.Still003.png",
+        import.meta.url
+      ).href,
     ],
     likes: 12,
     date: "2h",
@@ -75,7 +102,10 @@ const threads: IThread[] = [
     publisher: {
       id: "",
       username: "lucy",
-      picture: "/src/assets/images/4a207a19f6b74f2b457e9a500174b928.jpg",
+      picture: new URL(
+        "/src/assets/images/4a207a19f6b74f2b457e9a500174b928.jpg",
+        import.meta.url
+      ).href,
       isVerified: true,
     },
     content: "one of the best video games i've ever played was made by @EA :*)",
@@ -89,7 +119,10 @@ const threads: IThread[] = [
     publisher: {
       id: "",
       username: "lucy",
-      picture: "/src/assets/images/4a207a19f6b74f2b457e9a500174b928.jpg",
+      picture: new URL(
+        "/src/assets/images/4a207a19f6b74f2b457e9a500174b928.jpg",
+        import.meta.url
+      ).href,
       isVerified: true,
     },
     content: "one of the best video games i've ever played was made by @EA :*)",
@@ -103,7 +136,10 @@ const threads: IThread[] = [
     publisher: {
       id: "",
       username: "lucy",
-      picture: "/src/assets/images/4a207a19f6b74f2b457e9a500174b928.jpg",
+      picture: new URL(
+        "/src/assets/images/4a207a19f6b74f2b457e9a500174b928.jpg",
+        import.meta.url
+      ).href,
       isVerified: true,
     },
     content: "one of the best video games i've ever played was made by @EA :*)",

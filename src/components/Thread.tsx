@@ -27,35 +27,20 @@ const Thread = ({
   const userLink = `/users/${publisher.username}`;
 
   return (
-    <div className="w-full min-h-[130px] bg-white flex rounded-md">
+    <div className="w-full min-h-[130px] flex rounded-md">
       <ThreadAside
         userLink={userLink}
         publisherPicture={publisher.picture}
         replies={replies.slice(0, 2)}
       />
       <div className="w-[calc(100%-(12px+2.5rem))] text-md">
-        <header className="flex justify-between">
-          <div className="flex items-center">
-            <h2 className="text-md font-bold mr-[6px]">
-              <Link to={userLink}>{publisher.username}</Link>
-            </h2>
-            {publisher.isVerified && <TickIcon width={14} height={14} />}
-          </div>
-          <div className="flex">
-            <span className="text-slate-500 text-md">{date}</span>
-            <button className="pl-2 pr-2 ml-[12px]">
-              <DotsIcon />
-            </button>
-          </div>
-        </header>
-        <main>
-          <p>{content}</p>
-          {pictures.length > 0 && (
-            <section className="mt-[7px]">
-              <ImageSlider pictures={pictures} />
-            </section>
-          )}
-        </main>
+        <ThreadHeader
+          userLink={userLink}
+          username={publisher.username}
+          isVerified={publisher.isVerified}
+          date={date}
+        />
+        <ThreadContent pictures={pictures}>{content}</ThreadContent>
         <ThreadFooter likes={likes} repliesCount={replies.length} />
       </div>
     </div>
@@ -67,7 +52,7 @@ function ThreadAside({ userLink, publisherPicture, replies }: IThreadAside) {
     <aside className="min-w-fit pr-[12px] relative">
       <Link
         to={userLink}
-        className="block w-10 h-10 rounded-full bg-red-500 overflow-hidden">
+        className="block w-10 h-10 rounded-full overflow-hidden">
         <img
           src={publisherPicture}
           alt="yet to be added..."
@@ -92,6 +77,54 @@ function ThreadAside({ userLink, publisherPicture, replies }: IThreadAside) {
         })}
       </div>
     </aside>
+  );
+}
+
+function ThreadHeader({
+  userLink,
+  username,
+  isVerified,
+  date,
+}: {
+  userLink: string;
+  username: string;
+  isVerified?: boolean;
+  date: string;
+}) {
+  return (
+    <header className="flex justify-between">
+      <div className="flex items-center">
+        <h2 className="text-md font-bold mr-[6px]">
+          <Link to={userLink}>{username}</Link>
+        </h2>
+        {isVerified && <TickIcon width={14} height={14} />}
+      </div>
+      <div className="flex">
+        <span className="text-slate-500 text-md">{date}</span>
+        <button className="pl-2 pr-2 ml-[12px]">
+          <DotsIcon />
+        </button>
+      </div>
+    </header>
+  );
+}
+
+function ThreadContent({
+  children,
+  pictures,
+}: {
+  children: React.ReactNode;
+  pictures: string[];
+}) {
+  return (
+    <main>
+      <p>{children}</p>
+      {pictures.length > 0 && (
+        <section className="mt-[7px]">
+          <ImageSlider pictures={pictures} />
+        </section>
+      )}
+    </main>
   );
 }
 
