@@ -1,10 +1,24 @@
 import { Link } from "react-router-dom";
 import ImageSlider from "./ImageSlider";
-import { TickIcon } from "@/assets/icons/Icons";
-import { IThread } from "@/types";
+import {
+  TickIcon,
+  DotsIcon,
+  HeartIcon,
+  CommentIcon,
+  RepostIcon,
+  ShareIcon,
+} from "@/assets/icons/Icons";
+import { IThread, TReplier } from "@/types";
+import Stats from "./Stats";
 
 interface IThreadProps {
   data: IThread;
+}
+
+interface IThreadAside {
+  userLink: string;
+  publisherPicture?: string;
+  replies: TReplier[];
 }
 
 const Thread = ({
@@ -13,42 +27,147 @@ const Thread = ({
   const userLink = `/users/${publisher.username}`;
 
   return (
-    <div className="w-full min-h-[130px] bg-white flex rounded-md">
-      <aside className="min-w-fit pr-[12px]">
-        <Link
-          to={userLink}
-          className="block w-10 h-10 rounded-full bg-red-500 overflow-hidden">
-          <img
-            src={publisher.picture}
-            alt="yet to be added..."
-            className="w-full h-full object-cover"
-            loading="lazy"
-          />
-        </Link>
-      </aside>
-      <div className="w-full">
-        <header className="flex justify-between">
-          <div className="flex items-center">
-            <h2 className="text-md font-bold mr-[6px]">
-              <Link to={userLink}>{publisher.username}</Link>
-            </h2>
-            {publisher.isVerified && <TickIcon width={14} height={14} />}
-          </div>
-          <div>
-            <span className="text-slate-500 text-md">{date}</span>
-          </div>
-        </header>
-        <main>
-          <p className="text-md mb-[7px]">{content}</p>
-          <ImageSlider pictures={pictures} />
-        </main>
-        <footer>
-          <p>{likes}</p>
-          <p>{replies.length}</p>
-        </footer>
+    <div className="w-full min-h-[130px] flex rounded-md">
+      <ThreadAside
+        userLink={userLink}
+        publisherPicture={publisher.picture}
+        replies={replies.slice(0, 2)}
+      />
+      <div className="w-[calc(100%-(12px+2.5rem))] text-md">
+        <ThreadHeader
+          userLink={userLink}
+          username={publisher.username}
+          isVerified={publisher.isVerified}
+          date={date}
+        />
+        <ThreadContent pictures={pictures}>{content}</ThreadContent>
+        <ThreadFooter likes={likes} repliesCount={replies.length} />
       </div>
     </div>
   );
 };
+
+function ThreadAside({ userLink, publisherPicture, replies }: IThreadAside) {
+  return (
+    <aside className="min-w-fit pr-[12px] relative">
+      <Link
+        to={userLink}
+        className="block w-10 h-10 rounded-full overflow-hidden">
+        <img
+          src={publisherPicture}
+          alt="yet to be added..."
+          className="w-full h-full object-cover"
+          loading="lazy"
+        />
+      </Link>
+      {replies.length > 0 && (
+        <div className="w-[2px] h-[calc(100%-2.5rem-12px-1.5rem)] bg-lightGray rounded-full m-[10px_auto_0]"></div>
+      )}
+      <div className="relative mt-1 w-full h-6">
+        {replies.map((reply, index) => {
+          return (
+            <img
+              src={reply.picture}
+              alt="user image"
+              className="w-6 h-6 rounded-full border-themeColor border-[3px] absolute top-0"
+              style={{ left: index * 15 + "px" }}
+              key={index}
+            />
+          );
+        })}
+      </div>
+    </aside>
+  );
+}
+
+function ThreadHeader({
+  userLink,
+  username,
+  isVerified,
+  date,
+}: {
+  userLink: string;
+  username: string;
+  isVerified?: boolean;
+  date: string;
+}) {
+  return (
+    <header className="flex justify-between">
+      <div className="flex items-center">
+        <h2 className="text-md font-bold mr-[6px]">
+          <Link to={userLink}>{username}</Link>
+        </h2>
+        {isVerified && <TickIcon width={14} height={14} />}
+      </div>
+      <div className="flex">
+        <span className="text-slate-500 text-md">{date}</span>
+        <button className="pl-2 pr-2 ml-[12px]">
+          <DotsIcon />
+        </button>
+      </div>
+    </header>
+  );
+}
+
+function ThreadContent({
+  children,
+  pictures,
+}: {
+  children: React.ReactNode;
+  pictures: string[];
+}) {
+  return (
+    <main>
+      <p>{children}</p>
+      {pictures.length > 0 && (
+        <section className="mt-[7px]">
+          <ImageSlider pictures={pictures} />
+        </section>
+      )}
+    </main>
+  );
+}
+
+function ThreadFooter({
+  likes,
+  repliesCount,
+}: {
+  likes: number;
+  repliesCount: number;
+}) {
+  return (
+    <footer className="w-fit text-darkGray">
+      <ThreadInteractions />
+      <Stats
+        leftStat={`${repliesCount} replies`}
+        rightStat={`${likes} likes`}
+      />
+    </footer>
+  );
+}
+
+function ThreadInteractions() {
+  return (
+    <section className="flex gap-[18px] pt-[17px] pb-[17px]">
+      <button className="btn-interaction">
+        <HeartIcon
+          filled={false}
+          fillColor="black"
+          width="100%"
+          height="100%"
+        />
+      </button>
+      <button className="btn-interaction">
+        <CommentIcon />
+      </button>
+      <button className="btn-interaction">
+        <RepostIcon />
+      </button>
+      <button className="btn-interaction">
+        <ShareIcon />
+      </button>
+    </section>
+  );
+}
 
 export default Thread;

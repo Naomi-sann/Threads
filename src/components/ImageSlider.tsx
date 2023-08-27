@@ -14,7 +14,7 @@ let grabPositionCopy = 0;
 let positionCopy = 0;
 
 const ImageSlider = ({ pictures }: IImageSliderProps): JSX.Element => {
-  const [position, setPosition] = useState(1);
+  const [position, setPosition] = useState(positionCopy);
 
   const openedPictureSource = useAppSelector((state) => state.imagePreview.src);
   const dispatch = useAppDispatch();
@@ -43,7 +43,7 @@ const ImageSlider = ({ pictures }: IImageSliderProps): JSX.Element => {
         ? startPosition - x + grabPosition
         : 0;
 
-    if (isGrabbed && position > 0 && slideCalc < sliderWidth) {
+    if (isGrabbed && position >= 0 && slideCalc < sliderWidth) {
       setPosition(slideCalc);
       positionCopy = slideCalc;
     }
@@ -94,7 +94,7 @@ const ImageSlider = ({ pictures }: IImageSliderProps): JSX.Element => {
   }, []);
 
   return (
-    <div className="w-full select-none hehe">
+    <div className="w-full select-none">
       <div
         className="flex gap-2 will-change-transform"
         style={{ transform: `translateX(-${position}px)` }}>
@@ -110,13 +110,14 @@ const ImageSlider = ({ pictures }: IImageSliderProps): JSX.Element => {
               key={index}
               ref={imageRef}
               onClick={(e) =>
-                position - grabPositionCopy <= 50 &&
-                position - grabPositionCopy >= -50 &&
+                position - grabPositionCopy <= 30 &&
+                position - grabPositionCopy >= -30 &&
                 handleClick(e, pic)
               }
               onMouseDown={handleDown}
               onTouchStart={handleDown}
               onTouchEnd={handleUp}
+              loading="lazy"
             />
           );
         })}

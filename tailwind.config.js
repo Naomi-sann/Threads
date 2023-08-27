@@ -4,14 +4,17 @@ export default {
   theme: {
     extend: {
       width: {
-        threadWidth: "clamp(200px,100%,400px)",
+        threadWidth: "clamp(200px,100%,700px)",
+        interactionIconSize: "22.5px",
       },
       colors: {
         gray: "var(--clr-gray)",
-        lightGray: "var(--clr-gray)",
+        lightGray: "var(--clr-light-gray)",
+        darkGray: "var(--clr-dark-gray)",
+        themeColor: "var(--clr-theme)",
       },
       fontSize: {
-        md: "14px",
+        md: "18px",
       },
       keyframes: {
         "fade-out": {
@@ -27,25 +30,10 @@ export default {
             backgroundColor: "rgba(0,0,0,1)",
           },
         },
-        "place-center": {
-          to: {
-            width: "100%",
-            "max-width": "90dvh",
-            "border-radius": "0",
-          },
-        },
-        "move-center": {
-          to: {
-            transform: "translate(-50%, -50%)",
-            top: "50%",
-            left: "50%",
-          },
-        },
       },
       animation: {
         "fade-out": "fade-out .5s ease forwards",
         "fade-in": "fade-in .3s ease forwards",
-        "place-center": "move-center .3s forwards, place-center .3s forwards",
       },
     },
   },

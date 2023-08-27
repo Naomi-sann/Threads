@@ -43,4 +43,7 @@ type TDatas = {
 /* a coordinate type for mostly animations */
 type TPosition = { x: number, y: number };
 
-export type { TDatas, IUser, IThread, TPosition }
+/* removes a type field and adds the modified type of that field */
+type ChangeFields<T, F> = Omit<T, keyof F> & F;
+
+export type { TDatas, IUser, IThread, TPosition, TReplier, ChangeFields }

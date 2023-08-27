@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
-  heartIcon,
-  homeIcon,
-  searchIcon,
-  userIcon,
-  writeIcon,
+  HeartIcon,
+  HomeIcon,
+  SearchIcon,
+  UserIcon,
+  WriteIcon,
 } from "@/assets/icons/Icons";
 import { checkPaths } from "@/utils/utils";
 
@@ -16,31 +16,38 @@ const navItems: {
   {
     path: ["/", "/home"],
     icon(isActive, fillColor) {
-      return homeIcon(isActive, fillColor);
+      return <HomeIcon filled={isActive} fillColor={fillColor} />;
     },
   },
   {
     path: "/search",
     icon(isActive, fillColor) {
-      return searchIcon(isActive, fillColor);
+      return <SearchIcon filled={isActive} fillColor={fillColor} />;
     },
   },
   {
     path: "/new-thread",
     icon(isActive, fillColor) {
-      return writeIcon(isActive, fillColor);
+      return <WriteIcon filled={isActive} fillColor={fillColor} />;
     },
   },
   {
     path: "/activity",
     icon(isActive, fillColor) {
-      return heartIcon(isActive, fillColor);
+      return (
+        <HeartIcon
+          filled={isActive}
+          fillColor={fillColor}
+          strokeColor="var(--clr-gray)"
+          strokeWidth={3}
+        />
+      );
     },
   },
   {
     path: "/profile",
     icon(isActive, fillColor) {
-      return userIcon(isActive, fillColor);
+      return <UserIcon filled={isActive} fillColor={fillColor} />;
     },
   },
 ];

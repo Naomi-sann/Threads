@@ -25,9 +25,10 @@ function App() {
   }, []);
 
   return (
-    <div className="w-full h-[100svh]">
+    <div className="w-full h-[100dvh]">
       {dimensions.x > 1000 ? <DesktopTemplate /> : <MobileTemplate />}
       {isImageShowing && <ImagePreview />}
+      {}
     </div>
   );
 }
