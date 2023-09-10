@@ -10,6 +10,8 @@ import {
 } from "@/assets/icons/Icons";
 import { IThread, TReplier } from "@/types";
 import Stats from "./Stats";
+import { useAppDispatch } from "@/hooks/useReduxHooks";
+import { PopupTypes, openPopup } from "@/features/popupSlice";
 
 interface IThreadProps {
   data: IThread;
@@ -61,7 +63,7 @@ function ThreadAside({ userLink, publisherPicture, replies }: IThreadAside) {
         />
       </Link>
       {replies.length > 0 && (
-        <div className="w-[2px] h-[calc(100%-2.5rem-12px-1.5rem)] bg-lightGray rounded-full m-[10px_auto_0]"></div>
+        <div className="w-[2px] h-[calc(100%-2.5rem-12px-1.5rem)] bg-gray-400 rounded-full m-[10px_auto_0]"></div>
       )}
       <div className="relative mt-1 w-full h-6">
         {replies.map((reply, index) => {
@@ -91,6 +93,8 @@ function ThreadHeader({
   isVerified?: boolean;
   date: string;
 }) {
+  const dispatch = useAppDispatch();
+
   return (
     <header className="flex justify-between">
       <div className="flex items-center">
@@ -101,7 +105,27 @@ function ThreadHeader({
       </div>
       <div className="flex">
         <span className="text-slate-500 text-md">{date}</span>
-        <button className="pl-2 pr-2 ml-[12px]">
+        <button
+          className="pl-2 pr-2 ml-[12px] hahahahha"
+          onClick={() =>
+            dispatch(
+              openPopup({
+                type: PopupTypes.BOTTOM_NAV,
+                config: {
+                  closeOnBackgroundClick: true,
+                  duration: 250,
+                },
+                options: [
+                  { id: 1, title: "mute" },
+                  [
+                    { id: 2, title: "hide" },
+                    { id: 3, title: "block", color: "tomato-red" },
+                    { id: 4, title: "report", color: "tomato-red" },
+                  ],
+                ],
+              })
+            )
+          }>
           <DotsIcon />
         </button>
       </div>
@@ -136,7 +160,7 @@ function ThreadFooter({
   repliesCount: number;
 }) {
   return (
-    <footer className="w-fit text-darkGray">
+    <footer className="w-fit text-gray-800">
       <ThreadInteractions />
       <Stats
         leftStat={`${repliesCount} replies`}

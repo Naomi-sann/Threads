@@ -8,9 +8,13 @@ export default {
         interactionIconSize: "22.5px",
       },
       colors: {
-        gray: "var(--clr-gray)",
-        lightGray: "var(--clr-light-gray)",
-        darkGray: "var(--clr-dark-gray)",
+        gray: {
+          200: "var(--clr-light-gray)",
+          400: "var(--clr-medium-gray)",
+          600: "var(--clr-gray)",
+          800: "var(--clr-dark-gray)",
+        },
+        tomatoRed: "var(--clr-tomato-red)",
         themeColor: "var(--clr-theme)",
       },
       fontSize: {

@@ -1,9 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, lazy } from "react";
 import useWindowDimensions from "./hooks/useWindowDimensions";
 import DesktopTemplate from "@/templates/DesktopTemplate";
 import MobileTemplate from "@/templates/MobileTemplate";
 import { useAppSelector } from "@/hooks/useReduxHooks";
 import ImagePreview from "./components/ImagePreview";
+
+const Popup = lazy(() => import("./containers/Popup"));
 
 function App() {
   const dimensions = useWindowDimensions();
@@ -28,7 +30,7 @@ function App() {
     <div className="w-full h-[100dvh]">
       {dimensions.x > 1000 ? <DesktopTemplate /> : <MobileTemplate />}
       {isImageShowing && <ImagePreview />}
-      {}
+      <Popup />
     </div>
   );
 }
