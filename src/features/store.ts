@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import imagePreviewSlice from "./imagePreviewSlice";
+import popupSlice from "./popupSlice";
 
 const store = configureStore({
     reducer: {
         imagePreview: imagePreviewSlice,
+        popup: popupSlice,
     }
 })
 

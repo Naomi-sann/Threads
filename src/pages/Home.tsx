@@ -155,7 +155,7 @@ const Home = () => {
     <div className="flex flex-col items-center">
       {threads.map((t) => (
         <div
-          className="w-threadWidth border-b border-lightGray p-[10px]"
+          className="w-threadWidth border-b border-gray-400 p-[10px]"
           key={t.id}>
           <Thread data={t} />
         </div>
