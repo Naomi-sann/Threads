@@ -3,9 +3,19 @@ export default {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      screens: {
+        desktop: "1000px",
+      },
+      maxHeight: {
+        maxImageSize: "460px",
+      },
+      maxWidth: {
+        maxImageSize: "460px",
+      },
       width: {
-        threadWidth: "clamp(200px,100%,700px)",
+        threadWidth: "clamp(200px,100%,620px)",
         interactionIconSize: "22.5px",
+        fullThread: "calc(2.5rem+12px)",
       },
       colors: {
         gray: {
@@ -18,7 +28,7 @@ export default {
         themeColor: "var(--clr-theme)",
       },
       fontSize: {
-        md: "18px",
+        md: "17px",
       },
       keyframes: {
         "fade-out": {

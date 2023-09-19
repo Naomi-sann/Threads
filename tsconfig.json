@@ -19,6 +19,7 @@
       "@/components/*": ["./src/components/*"],
       "@/containers/*": ["./src/containers/*"],
       "@/contexts/*": ["./src/contexts/*"],
+      "@/features/*": ["./src/features/*"],
       "@/routes/*": ["./src/routes/*"],
       "@/templates/*": ["./src/templates/*"],
       "@/utils/*": ["./src/utils/*"]

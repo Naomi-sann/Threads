@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import imagePreviewSlice from "./imagePreviewSlice";
 import popupSlice from "./popupSlice";
+import deviceSlice from "./deviceSlice";
 
 const store = configureStore({
     reducer: {
         imagePreview: imagePreviewSlice,
         popup: popupSlice,
+        device: deviceSlice
     }
 })
 

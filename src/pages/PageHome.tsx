@@ -82,12 +82,10 @@ const threads: IThread[] = [
         "/src/assets/images/Need for Speed™ Most Wanted 2023-07-20 20-45-59.00_00_28_25.Still007.png",
         import.meta.url
       ).href,
-
       new URL(
         "/src/assets/images/Need for Speed™ Most Wanted 2023-07-20 20-45-59.00_00_33_09.Still002.png",
         import.meta.url
       ).href,
-
       new URL(
         "/src/assets/images/Need for Speed™ Most Wanted 2023-07-20 20-45-59.00_01_30_23.Still003.png",
         import.meta.url
@@ -155,7 +153,7 @@ const Home = () => {
     <div className="flex flex-col items-center">
       {threads.map((t) => (
         <div
-          className="w-threadWidth border-b border-gray-400 p-[10px]"
+          className="w-threadWidth border-b border-gray-400 p-[12px] desktop:px-[0]"
           key={t.id}>
           <Thread data={t} />
         </div>
