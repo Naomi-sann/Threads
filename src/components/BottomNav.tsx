@@ -1,107 +1,110 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, forwardRef } from "react";
 import { animated, useSpring } from "@react-spring/web";
 import { IOption } from "@/features/popupSlice";
 
-const BottomNav = ({
-  isClosing,
-  duration,
-  options,
-  popupRef,
-  handleClose,
-}: {
-  isClosing: boolean;
-  duration?: number;
-  options: (IOption | IOption[])[];
-  popupRef: React.MutableRefObject<HTMLDivElement | null>;
-  handleClose: () => void;
-}) => {
-  const [openStatus, setOpenStatus] = useState({
-    isDown: false,
-    y: 0,
-    initialY: 0,
-    yShift: 0,
-  });
-  const [navSpring, api] = useSpring(() => ({
-    from: {
-      y: "100%",
-    },
-    to: {
-      y: "0",
-    },
-    config: {
+const BottomNav = forwardRef(
+  (
+    {
+      isClosing,
       duration,
+      options,
+      handleClose,
+    }: {
+      isClosing: boolean;
+      duration?: number;
+      options: (IOption | IOption[])[];
+      handleClose: () => void;
     },
-  }));
-
-  useEffect(() => {
-    isClosing &&
-      api.start({
-        from: {
-          y: openStatus.yShift + "px",
-        },
-        to: {
-          y: popupRef.current?.clientHeight + "px",
-        },
-        config: {
-          duration,
-        },
-      });
-  }, [isClosing]);
-
-  const handleDown = (e: React.TouchEvent) => {
-    setOpenStatus({
-      ...openStatus,
-      isDown: true,
-      initialY: e.touches[0].clientY,
+    ref: React.ForwardedRef<HTMLDivElement>
+  ) => {
+    const [openStatus, setOpenStatus] = useState({
+      isDown: false,
+      y: 0,
+      initialY: 0,
+      yShift: 0,
     });
-  };
-
-  const handleMove = (e: React.TouchEvent) => {
-    const currentY = e.touches[0].clientY;
-    const yShift = currentY - openStatus.initialY;
-
-    setOpenStatus({ ...openStatus, y: currentY, yShift });
-
-    if (yShift < 0) return;
-
-    api.start({
+    const [navSpring, api] = useSpring(() => ({
+      from: {
+        y: "100%",
+      },
       to: {
-        y: yShift + "px",
+        y: "0",
       },
       config: {
-        duration: 0,
+        duration,
       },
-    });
-  };
+    }));
 
-  const handleUp = () => {
-    if (openStatus.yShift > 75) handleClose();
-    else
+    useEffect(() => {
+      isClosing &&
+        api.start({
+          from: {
+            y: openStatus.yShift + "px",
+          },
+          to: {
+            y: (ref && "current" in ref && ref.current?.clientHeight) + "px",
+          },
+          config: {
+            duration,
+          },
+        });
+    }, [isClosing]);
+
+    const handleDown = (e: React.TouchEvent) => {
+      setOpenStatus({
+        ...openStatus,
+        isDown: true,
+        initialY: e.touches[0].clientY,
+      });
+    };
+
+    const handleMove = (e: React.TouchEvent) => {
+      const currentY = e.touches[0].clientY;
+      const yShift = currentY - openStatus.initialY;
+
+      setOpenStatus({ ...openStatus, y: currentY, yShift });
+
+      if (yShift < 0) return;
+
       api.start({
         to: {
-          y: "0",
+          y: yShift + "px",
         },
         config: {
-          duration,
+          duration: 0,
         },
       });
-  };
+    };
 
-  return (
-    <animated.div
-      id="popup-nav"
-      className="w-full h-fit absolute bg-white rounded-tl-[1rem] rounded-tr-[1rem] bottom-0 left-0"
-      style={{ ...navSpring }}
-      ref={popupRef}>
-      <div
-        className="w-full h-10 before:w-12 before:h-1 before:bg-gray-600 before:absolute before:rounded-full before:top-3 before:left-1/2 before:-translate-x-1/2 cursor-grab active:cursor-grabbing"
-        onTouchStart={handleDown}
-        onTouchMove={handleMove}
-        onTouchEnd={handleUp}></div>
-      <OptionList options={options} />
-    </animated.div>
-  );
-};
+    const handleUp = () => {
+      if (openStatus.yShift > 75) handleClose();
+      else
+        api.start({
+          to: {
+            y: "0",
+          },
+          config: {
+            duration,
+          },
+        });
+    };
+
+    return (
+      <animated.div
+        id="popup-nav"
+        className="w-full h-fit absolute bg-white rounded-tl-[1rem] rounded-tr-[1rem] bottom-0 left-0"
+        style={{ ...navSpring }}
+        ref={ref}>
+        <div
+          className="w-full h-10 before:w-12 before:h-1 before:bg-gray-600 before:absolute before:rounded-full before:top-3 before:left-1/2 before:-translate-x-1/2 cursor-grab active:cursor-grabbing"
+          onTouchStart={handleDown}
+          onTouchMove={handleMove}
+          onTouchEnd={handleUp}></div>
+        <OptionList options={options} />
+      </animated.div>
+    );
+  }
+);
 
 function OptionList({ options }: { options: (IOption | IOption[])[] }) {
   return (

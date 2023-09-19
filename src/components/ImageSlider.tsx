@@ -1,63 +1,25 @@
-import { useState, useRef, useEffect } from "react";
-import { getMultiDeviceCursorPosition } from "@/utils/utils";
+import { useRef } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 import { openImage } from "@/features/imagePreviewSlice";
+import { LeftArrowIcon, RightArrowIcon } from "@/assets/icons/Icons";
 
 interface IImageSliderProps {
+  controller?: boolean;
   pictures: string[];
+  sliderSize?: { breakPoint: number; size: string | number };
 }
 
-let isGrabbed = false;
-let startPosition = 0;
-let grabPosition = 0;
-let grabPositionCopy = 0;
-let positionCopy = 0;
-
-const ImageSlider = ({ pictures }: IImageSliderProps): JSX.Element => {
-  const [position, setPosition] = useState(positionCopy);
-
-  const openedPictureSource = useAppSelector((state) => state.imagePreview.src);
+const ImageSlider = ({
+  controller,
+  pictures,
+  sliderSize,
+}: IImageSliderProps): JSX.Element => {
+  const openedImageSrc = useAppSelector((state) => state.imagePreview.src);
+  const device = useAppSelector((state) => state.device.device);
   const dispatch = useAppDispatch();
 
-  const imageRef = useRef<HTMLImageElement>(null);
-
-  const handleDown = (
-    e: React.MouseEvent<HTMLImageElement> | React.TouchEvent<HTMLImageElement>
-  ) => {
-    if (!(e.target as Element).classList.contains("thread-picture")) return;
-    isGrabbed = true;
-    startPosition = getMultiDeviceCursorPosition(e).x;
-    grabPositionCopy = positionCopy;
-  };
-
-  const handleMove = (e: MouseEvent | TouchEvent) => {
-    if (!imageRef.current) return;
-
-    const { x } = getMultiDeviceCursorPosition(e);
-
-    const sliderWidth =
-      imageRef.current.width * (pictures.length - 1) + 8 * pictures.length - 1;
-
-    const slideCalc =
-      startPosition - x + grabPosition > 0
-        ? startPosition - x + grabPosition
-        : 0;
-
-    if (isGrabbed && position >= 0 && slideCalc < sliderWidth) {
-      setPosition(slideCalc);
-      positionCopy = slideCalc;
-    }
-  };
-
-  const handleUp = () => {
-    isGrabbed = false;
-    grabPosition = positionCopy;
-    startPosition = 0;
-  };
-
-  const handleMouseLeave = () => {
-    if (isGrabbed) isGrabbed = false;
-  };
+  const refImage = useRef<HTMLImageElement>(null);
+  const refSlider = useRef(null);
 
   const handleClick = (
     event: React.MouseEvent<HTMLDivElement>,
@@ -77,53 +39,80 @@ const ImageSlider = ({ pictures }: IImageSliderProps): JSX.Element => {
     );
   };
 
-  useEffect(() => {
-    document.addEventListener("mousemove", handleMove);
-    document.addEventListener("mouseup", handleUp);
-    document.addEventListener("mouseleave", handleMouseLeave);
-    document.addEventListener("touchmove", handleMove);
-    document.addEventListener("touchcancel", handleMouseLeave);
-
-    return () => {
-      document.removeEventListener("mousemove", handleMove);
-      document.removeEventListener("mouseup", handleUp);
-      document.removeEventListener("mouseleave", handleMouseLeave);
-      document.removeEventListener("touchmove", handleMove);
-      document.removeEventListener("touchcancel", handleMouseLeave);
-    };
-  }, []);
-
   return (
-    <div className="w-full select-none">
+    <div className="group/test relative -ml-[calc(2.5rem+12px)] overflow-visible pb-2">
       <div
-        className="flex gap-2 will-change-transform"
-        style={{ transform: `translateX(-${position}px)` }}>
-        {pictures.map((pic, index) => {
-          return (
-            <img
-              src={pic}
-              alt="content_picture"
-              className={`thread-picture rounded-xl transition-transform ease-linear duration-100 active:scale-90 max-w-[clamp(200px,75vw,375px)] w-fit cursor-grab active:cursor-grabbing ${
-                openedPictureSource === pic ? "opacity-0" : ""
-              }`}
-              draggable="false"
-              key={index}
-              ref={imageRef}
-              onClick={(e) =>
-                position - grabPositionCopy <= 30 &&
-                position - grabPositionCopy >= -30 &&
-                handleClick(e, pic)
-              }
-              onMouseDown={handleDown}
-              onTouchStart={handleDown}
-              onTouchEnd={handleUp}
-              loading="lazy"
-            />
-          );
-        })}
+        className={`picture-container w-${
+          sliderSize?.size ? `[${sliderSize.size}]` : "fullThread"
+        } select-none overflow-x-scroll snap-x`}
+        ref={refSlider}>
+        <div className="flex w-fit h-fit gap-2 pl-[calc(5.5rem+12px)]">
+          {pictures.map((pic, index) => {
+            return (
+              <div key={index} className="snap-center min-w-fit">
+                <img
+                  src={pic}
+                  alt="content_picture"
+                  className={`thread-picture rounded-xl transition-transform ease-linear duration-100 active:scale-[.98] max-h-[460px] cursor-pointer ${
+                    openedImageSrc === pic ? "opacity-0" : ""
+                  }`}
+                  draggable="false"
+                  ref={refImage}
+                  onClick={(e) => handleClick(e, pic)}
+                  loading="lazy"
+                />
+              </div>
+            );
+          })}
+          <div className="pr-[calc(5.5rem+4px)]"></div>
+        </div>
       </div>
+      {device === "desktop" && controller && (
+        <SlideController sliderRef={refSlider} />
+      )}
     </div>
   );
 };
+
+function SlideController({
+  sliderRef,
+}: {
+  sliderRef: React.RefObject<HTMLDivElement>;
+}) {
+  const handleClick = (dir: "left" | "right") => {
+    if (dir === "left") {
+      sliderRef.current?.scrollBy({
+        left: 10,
+        top: 200,
+      });
+      sliderRef.current?.scroll({ left: 100 });
+    } else if (dir === "right") {
+      sliderRef.current?.scrollBy({
+        left: 150,
+        top: 200,
+      });
+      sliderRef.current?.scroll({ left: 100 });
+    }
+  };
+
+  return (
+    <>
+      <div className="absolute -translate-x-[100%] left-0 top-0 h-full w-20 flex justify-center items-center">
+        <button
+          className="opacity-0 group-hover/test:opacity-100 h-[44px] w-[44px] bg-gray-200 rounded-full flex justify-center items-center transition-opacity"
+          onClick={() => handleClick("left")}>
+          <LeftArrowIcon />
+        </button>
+      </div>
+      <div className="absolute translate-x-[100%] right-0 top-0 h-full w-20 flex justify-center items-center">
+        <button
+          className="opacity-0 group-hover/test:opacity-100 h-[44px] w-[44px] bg-gray-200 rounded-full flex justify-center items-center transition-opacity"
+          onClick={() => handleClick("right")}>
+          <RightArrowIcon />
+        </button>
+      </div>
+    </>
+  );
+}
 
 export default ImageSlider;

@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @font-face {
+  src: url("./assets/fonts/SFPRODISPLAYMEDIUM.OTF");
+  font-family: sf-pro;
+}
+@font-face {
   src: url("./assets/fonts/SFPRODISPLAYREGULAR.OTF");
   font-family: sf-pro;
 }
@@ -37,13 +41,11 @@ body {
   overflow: hidden;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
 #view::-webkit-scrollbar {
   width: 0;
+}
+.picture-container::-webkit-scrollbar {
+  height: 0;
 }
 
 @layer components {

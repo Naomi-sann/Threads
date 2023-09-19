@@ -1,9 +1,9 @@
-const AlertBox = ({
-  popupRef,
-}: {
-  popupRef: React.MutableRefObject<HTMLDivElement | null>;
-}) => {
-  return <div ref={popupRef}>alertbox</div>;
-};
+import { forwardRef } from "react";
+
+const AlertBox = forwardRef(
+  (props, ref: React.ForwardedRef<HTMLDivElement>) => {
+    return <div ref={ref}>alertbox</div>;
+  }
+);
 
 export default AlertBox;

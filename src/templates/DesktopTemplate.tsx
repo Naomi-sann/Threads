@@ -1,5 +1,11 @@
+import View from "@/containers/View";
+
 const DesktopTemplate = () => {
-  return <h1>desktop</h1>;
+  return (
+    <div className="w-full h-full relative">
+      <View />
+    </div>
+  );
 };
 
 export default DesktopTemplate;

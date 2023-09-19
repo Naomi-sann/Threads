@@ -1,10 +1,10 @@
 import App from "@/App";
-import Home from "@/pages/Home";
-import Search from "@/pages/Search";
-import Thread from "@/pages/NewThread";
-import Activity from "@/pages/Activity";
-import Profile from "@/pages/Profile";
-import NotFound from "@/pages/NotFound";
+import Home from "@/pages/PageHome";
+import Search from "@/pages/PageSearch";
+import Thread from "@/pages/PageNewThread";
+import Activity from "@/pages/PageActivity";
+import Profile from "@/pages/PageProfile";
+import NotFound from "@/pages/PageNotFound";
 import type { RouteObject } from "react-router-dom";
 
 const routes: RouteObject[] = [

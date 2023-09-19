@@ -59,15 +59,15 @@ const Popup = () => {
   const renderAlert = () => {
     switch (type) {
       case PopupTypes.ALERT_BOX:
-        return <AlertBox popupRef={refPopup} />;
+        return <AlertBox ref={refPopup} />;
       case PopupTypes.BOTTOM_NAV:
         return (
           <BottomNav
             isClosing={isClosing}
             duration={duration}
             options={options}
-            popupRef={refPopup}
             handleClose={handleClose}
+            ref={refPopup}
           />
         );
     }

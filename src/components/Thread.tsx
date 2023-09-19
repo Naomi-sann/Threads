@@ -142,10 +142,14 @@ function ThreadContent({
 }) {
   return (
     <main>
-      <p>{children}</p>
+      <p className="font-thin">{children}</p>
       {pictures.length > 0 && (
-        <section className="mt-[7px]">
-          <ImageSlider pictures={pictures} />
+        <section className="mt-[8px]">
+          <ImageSlider
+            pictures={pictures}
+            sliderSize={{ breakPoint: 525, size: "100%" }}
+            controller
+          />
         </section>
       )}
     </main>
@@ -172,7 +176,7 @@ function ThreadFooter({
 
 function ThreadInteractions() {
   return (
-    <section className="flex gap-[18px] pt-[17px] pb-[17px]">
+    <section className="flex gap-[18px] pt-[10px] pb-[10px]">
       <button className="btn-interaction">
         <HeartIcon
           filled={false}
