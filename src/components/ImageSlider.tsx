@@ -39,13 +39,23 @@ const ImageSlider = ({
     );
   };
 
+  const handleScroll = (e: React.UIEvent) => {
+    const target = e.target as HTMLDivElement;
+
+    if (target.scrollLeft === 0)
+      target.scrollTo({ left: 100, behavior: "smooth" });
+    if (target.offsetWidth + target.scrollLeft >= target.scrollWidth)
+      target.scrollBy({ left: -100, behavior: "smooth" });
+  };
+
   return (
     <div className="group/test relative -ml-[calc(2.5rem+12px)] overflow-visible pb-2">
       <div
         className={`picture-container w-${
           sliderSize?.size ? `[${sliderSize.size}]` : "fullThread"
-        } select-none overflow-x-scroll snap-x`}
-        ref={refSlider}>
+        } select-none overflow-x-scroll snap-x snap-proximity`}
+        ref={refSlider}
+        onScroll={device === "desktop" ? handleScroll : undefined}>
         <div className="flex w-fit h-fit gap-2 pl-[calc(5.5rem+12px)]">
           {pictures.map((pic, index) => {
             return (
@@ -82,32 +92,31 @@ function SlideController({
   const handleClick = (dir: "left" | "right") => {
     if (dir === "left") {
       sliderRef.current?.scrollBy({
-        left: 10,
-        top: 200,
+        left: -500,
+        behavior: "smooth",
       });
-      sliderRef.current?.scroll({ left: 100 });
     } else if (dir === "right") {
       sliderRef.current?.scrollBy({
-        left: 150,
-        top: 200,
+        left: 500,
+        behavior: "smooth",
       });
-      sliderRef.current?.scroll({ left: 100 });
     }
   };
 
+  const buttonContainerClass =
+    "absolute top-0 h-full w-20 flex justify-center items-center";
+  const buttonClass =
+    "opacity-0 group-hover/test:opacity-100 h-[44px] w-[44px] bg-gray-200 rounded-full flex justify-center items-center transition-[opacity_transform] active:scale-90 hover:scale-110 will-change-transform";
+
   return (
     <>
-      <div className="absolute -translate-x-[100%] left-0 top-0 h-full w-20 flex justify-center items-center">
-        <button
-          className="opacity-0 group-hover/test:opacity-100 h-[44px] w-[44px] bg-gray-200 rounded-full flex justify-center items-center transition-opacity"
-          onClick={() => handleClick("left")}>
+      <div className={`${buttonContainerClass} left-0 -translate-x-[100%]`}>
+        <button className={buttonClass} onClick={() => handleClick("left")}>
           <LeftArrowIcon />
         </button>
       </div>
-      <div className="absolute translate-x-[100%] right-0 top-0 h-full w-20 flex justify-center items-center">
-        <button
-          className="opacity-0 group-hover/test:opacity-100 h-[44px] w-[44px] bg-gray-200 rounded-full flex justify-center items-center transition-opacity"
-          onClick={() => handleClick("right")}>
+      <div className={`${buttonContainerClass} right-0 translate-x-[100%]`}>
+        <button className={buttonClass} onClick={() => handleClick("right")}>
           <RightArrowIcon />
         </button>
       </div>
