@@ -39,7 +39,7 @@ const BottomNav = forwardRef(
       isClosing &&
         api.start({
           from: {
-            y: openStatus.yShift + "px",
+            y: (openStatus.yShift <= 0 ? 0 : openStatus.yShift) + "px",
           },
           to: {
             y: (ref && "current" in ref && ref.current?.clientHeight) + "px",

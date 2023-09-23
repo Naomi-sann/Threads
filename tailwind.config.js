@@ -17,12 +17,16 @@ export default {
         interactionIconSize: "22.5px",
         fullThread: "calc(2.5rem+12px)",
       },
+      height: {
+        menuHeight: "75px",
+      },
       colors: {
         gray: {
           200: "var(--clr-light-gray)",
           400: "var(--clr-medium-gray)",
           600: "var(--clr-gray)",
           800: "var(--clr-dark-gray)",
+          900: "rgb(30,30,30)",
         },
         tomatoRed: "var(--clr-tomato-red)",
         themeColor: "var(--clr-theme)",

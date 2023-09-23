@@ -67,35 +67,33 @@ const NavMenu = () => {
   }
 
   return (
-    <section className="w-full h-[75px] absolute bottom-0 bg-white">
-      <nav className="h-full">
-        <ul className="flex justify-evenly items-center h-full">
-          {navItems.map(({ path, icon }, index) => {
-            const isMultiPath = Array.isArray(path);
+    <nav className="h-full">
+      <ul className="flex justify-evenly items-center h-full">
+        {navItems.map(({ path, icon }, index) => {
+          const isMultiPath = Array.isArray(path);
 
-            return (
-              <Link
-                className="group/nav-item w-[calc(100%/5-5vw)] h-[55px] flex justify-center items-center cursor-pointer"
-                key={index}
-                to={isMultiPath ? path[0] : path}
-                draggable="false"
-                onMouseDown={() => handleMouseDown(index)}
-                onMouseUp={() => handleMouseUp(index)}
-                onMouseLeave={() =>
-                  isItemActive ? handleMouseUp(index) : undefined
-                }
-                onTouchStart={() => handleMouseDown(index)}
-                onTouchEnd={() => handleMouseUp(index)}>
-                {icon(
-                  checkPaths(path, pathname) ||
-                    (isItemActive?.index === index && isItemActive.isActive)
-                )}
-              </Link>
-            );
-          })}
-        </ul>
-      </nav>
-    </section>
+          return (
+            <Link
+              className="group/nav-item w-[calc(100%/5-5vw)] h-16 flex justify-center items-center cursor-pointer"
+              key={index}
+              to={isMultiPath ? path[0] : path}
+              draggable="false"
+              onMouseDown={() => handleMouseDown(index)}
+              onMouseUp={() => handleMouseUp(index)}
+              onMouseLeave={() =>
+                isItemActive ? handleMouseUp(index) : undefined
+              }
+              onTouchStart={() => handleMouseDown(index)}
+              onTouchEnd={() => handleMouseUp(index)}>
+              {icon(
+                checkPaths(path, pathname) ||
+                  (isItemActive?.index === index && isItemActive.isActive)
+              )}
+            </Link>
+          );
+        })}
+      </ul>
+    </nav>
   );
 };
 

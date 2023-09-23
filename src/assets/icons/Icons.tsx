@@ -358,6 +358,70 @@ const LeftArrowIcon = () => {
   );
 };
 
+const MoreIcon = () => {
+  return (
+    <svg
+      aria-label="More"
+      color="rgb(243, 245, 247)"
+      fill="rgb(243, 245, 247)"
+      height="24"
+      role="img"
+      viewBox="0 0 24 24"
+      width="24">
+      <title>More</title>
+      <rect
+        fill="currentColor"
+        height="2.5"
+        rx="1.25"
+        width="21"
+        x="3"
+        y="7"></rect>
+      <rect
+        fill="currentColor"
+        height="2.5"
+        rx="1.25"
+        width="14"
+        x="10"
+        y="15"></rect>
+    </svg>
+  );
+};
+
+const CloseIcon = () => {
+  return (
+    <svg
+      aria-label="Close"
+      color="rgb(119, 119, 119)"
+      fill="rgb(119, 119, 119)"
+      height="18"
+      role="img"
+      viewBox="0 0 24 24"
+      width="18">
+      <title>Close</title>
+      <line
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        x1="21"
+        x2="3"
+        y1="3"
+        y2="21"></line>
+      <line
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        x1="21"
+        x2="3"
+        y1="21"
+        y2="3"></line>
+    </svg>
+  );
+};
+
 export {
   HomeIcon,
   SearchIcon,
@@ -372,4 +436,6 @@ export {
   ShareIcon,
   RightArrowIcon,
   LeftArrowIcon,
+  MoreIcon,
+  CloseIcon,
 };
