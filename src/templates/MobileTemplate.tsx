@@ -3,10 +3,12 @@ import NavMenu from "@/containers/NavMenu";
 
 const MobileTemplate = () => {
   return (
-    <div className="w-full h-full relative">
+    <>
       <View />
-      <NavMenu />
-    </div>
+      <section className="w-full h-menuHeight absolute bottom-0 bg-white">
+        <NavMenu />
+      </section>
+    </>
   );
 };
 

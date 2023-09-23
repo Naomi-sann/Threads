@@ -1,5 +1,6 @@
 import { IThread } from "@/types";
 import Thread from "@/components/Thread";
+import Button from "@/components/Button";
 
 /* dummy datas */
 const threads: IThread[] = [
@@ -151,9 +152,12 @@ const threads: IThread[] = [
 const Home = () => {
   return (
     <div className="flex flex-col items-center">
+      <div className="w-threadWidth flex justify-center">
+        <StartThread />
+      </div>
       {threads.map((t) => (
         <div
-          className="w-threadWidth border-b border-gray-400 p-[12px] desktop:px-[0]"
+          className="w-threadWidth border-b border-gray-400 p-3 desktop:px-0"
           key={t.id}>
           <Thread data={t} />
         </div>
@@ -161,5 +165,28 @@ const Home = () => {
     </div>
   );
 };
+
+function StartThread() {
+  return (
+    <div className="w-full py-3 border-b-[1px] border-gray-400 flex justify-between items-center">
+      <img
+        src={
+          new URL(
+            "../assets/images/avatars-Ywx1lArS4ahFDVws-K24FuA-t500x500.jpg",
+            import.meta.url
+          ).href
+        }
+        alt="profile picture"
+        width="40"
+        height="40"
+        className="rounded-full"
+      />
+      <div className="grow cursor-text flex items-center mx-3 h-full">
+        <span className="text-gray-800">Start a thread...</span>
+      </div>
+      <Button disabled>Post</Button>
+    </div>
+  );
+}
 
 export default Home;

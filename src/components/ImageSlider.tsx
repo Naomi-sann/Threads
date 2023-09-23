@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 import { openImage } from "@/features/imagePreviewSlice";
 import { LeftArrowIcon, RightArrowIcon } from "@/assets/icons/Icons";
+import IconButton from "./IconButton";
 
 interface IImageSliderProps {
   controller?: boolean;
@@ -42,14 +43,14 @@ const ImageSlider = ({
   const handleScroll = (e: React.UIEvent) => {
     const target = e.target as HTMLDivElement;
 
-    if (target.scrollLeft === 0)
+    if (target.scrollLeft <= 5)
       target.scrollTo({ left: 100, behavior: "smooth" });
-    if (target.offsetWidth + target.scrollLeft >= target.scrollWidth)
+    if (target.offsetWidth + target.scrollLeft >= target.scrollWidth - 5)
       target.scrollBy({ left: -100, behavior: "smooth" });
   };
 
   return (
-    <div className="group/test relative -ml-[calc(2.5rem+12px)] overflow-visible pb-2">
+    <div className="group/image-slider relative -ml-[calc(2.5rem+12px)] overflow-visible pb-2">
       <div
         className={`picture-container w-${
           sliderSize?.size ? `[${sliderSize.size}]` : "fullThread"
@@ -104,21 +105,19 @@ function SlideController({
   };
 
   const buttonContainerClass =
-    "absolute top-0 h-full w-20 flex justify-center items-center";
-  const buttonClass =
-    "opacity-0 group-hover/test:opacity-100 h-[44px] w-[44px] bg-gray-200 rounded-full flex justify-center items-center transition-[opacity_transform] active:scale-90 hover:scale-110 will-change-transform";
+    "absolute top-0 h-full w-20 flex justify-center items-center opacity-0 transition-opacity group-hover/image-slider:opacity-100";
 
   return (
     <>
       <div className={`${buttonContainerClass} left-0 -translate-x-[100%]`}>
-        <button className={buttonClass} onClick={() => handleClick("left")}>
+        <IconButton onClick={() => handleClick("left")}>
           <LeftArrowIcon />
-        </button>
+        </IconButton>
       </div>
       <div className={`${buttonContainerClass} right-0 translate-x-[100%]`}>
-        <button className={buttonClass} onClick={() => handleClick("right")}>
+        <IconButton onClick={() => handleClick("right")}>
           <RightArrowIcon />
-        </button>
+        </IconButton>
       </div>
     </>
   );

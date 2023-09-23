@@ -51,7 +51,7 @@ const Thread = ({
 
 function ThreadAside({ userLink, publisherPicture, replies }: IThreadAside) {
   return (
-    <aside className="min-w-fit pr-[12px] relative">
+    <aside className="min-w-fit pr-3 relative">
       <Link
         to={userLink}
         className="block w-10 h-10 rounded-full overflow-hidden">
@@ -106,7 +106,7 @@ function ThreadHeader({
       <div className="flex">
         <span className="text-slate-500 text-md">{date}</span>
         <button
-          className="pl-2 pr-2 ml-[12px] hahahahha"
+          className="px-2 ml-3"
           onClick={() =>
             dispatch(
               openPopup({

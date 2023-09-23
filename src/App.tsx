@@ -32,7 +32,9 @@ function App() {
 
   return (
     <div className="w-full h-[100dvh]">
-      {dimensions.x > 1000 ? <DesktopTemplate /> : <MobileTemplate />}
+      <div className="w-full h-full relative">
+        {dimensions.x > 1000 ? <DesktopTemplate /> : <MobileTemplate />}
+      </div>
       {isImageShowing && <ImagePreview />}
       <Popup />
     </div>

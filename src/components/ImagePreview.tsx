@@ -5,6 +5,8 @@ import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { closeImage } from "@/features/imagePreviewSlice";
 import { getMultiDeviceCursorPosition } from "@/utils/utils";
+import IconButton from "./IconButton";
+import { CloseIcon } from "@/assets/icons/Icons";
 
 let isGrabbed = false;
 let grabPosition: TPosition = { x: 0, y: 0 };
@@ -131,11 +133,17 @@ function ImagePreview() {
       style={{
         position: "fixed",
         inset: 0,
+        zIndex: 10,
         ...opacity,
       }}
       onClick={handleClick}
       onMouseLeave={handleUp}
       onTouchCancel={handleUp}>
+      <div className="absolute top-[24px] left-[24px] z-20">
+        <IconButton theme="dark">
+          <CloseIcon />
+        </IconButton>
+      </div>
       <animated.img
         id="thread-image"
         src={src}
