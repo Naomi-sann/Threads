@@ -1,5 +1,5 @@
 import { IThread } from "@/types";
-import Thread from "@/components/Thread";
+import Thread from "@/components/Thread/Thread";
 import Button from "@/components/Button";
 
 /* dummy datas */

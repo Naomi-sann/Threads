@@ -1,17 +1,14 @@
 import { Link } from "react-router-dom";
-import ImageSlider from "./ImageSlider";
+import ThreadHeader from "./ThreadHeader";
+import ImageSlider from "../ImageSlider";
 import {
-  TickIcon,
-  DotsIcon,
   HeartIcon,
   CommentIcon,
   RepostIcon,
   ShareIcon,
 } from "@/assets/icons/Icons";
 import { IThread, TReplier } from "@/types";
-import Stats from "./Stats";
-import { useAppDispatch } from "@/hooks/useReduxHooks";
-import { PopupTypes, openPopup } from "@/features/popupSlice";
+import Stats from "../Stats";
 
 interface IThreadProps {
   data: IThread;
@@ -82,57 +79,6 @@ function ThreadAside({ userLink, publisherPicture, replies }: IThreadAside) {
   );
 }
 
-function ThreadHeader({
-  userLink,
-  username,
-  isVerified,
-  date,
-}: {
-  userLink: string;
-  username: string;
-  isVerified?: boolean;
-  date: string;
-}) {
-  const dispatch = useAppDispatch();
-
-  return (
-    <header className="flex justify-between">
-      <div className="flex items-center">
-        <h2 className="text-md font-bold mr-[6px]">
-          <Link to={userLink}>{username}</Link>
-        </h2>
-        {isVerified && <TickIcon width={14} height={14} />}
-      </div>
-      <div className="flex">
-        <span className="text-slate-500 text-md">{date}</span>
-        <button
-          className="px-2 ml-3"
-          onClick={() =>
-            dispatch(
-              openPopup({
-                type: PopupTypes.BOTTOM_NAV,
-                config: {
-                  closeOnBackgroundClick: true,
-                  duration: 250,
-                },
-                options: [
-                  { id: 1, title: "mute" },
-                  [
-                    { id: 2, title: "hide" },
-                    { id: 3, title: "block", color: "tomato-red" },
-                    { id: 4, title: "report", color: "tomato-red" },
-                  ],
-                ],
-              })
-            )
-          }>
-          <DotsIcon />
-        </button>
-      </div>
-    </header>
-  );
-}
-
 function ThreadContent({
   children,
   pictures,
@@ -142,7 +88,7 @@ function ThreadContent({
 }) {
   return (
     <main>
-      <p className="font-thin">{children}</p>
+      <p>{children}</p>
       {pictures.length > 0 && (
         <section className="mt-[8px]">
           <ImageSlider

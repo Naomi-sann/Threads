@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 import { openImage } from "@/features/imagePreviewSlice";
 import { LeftArrowIcon, RightArrowIcon } from "@/assets/icons/Icons";
@@ -20,7 +20,20 @@ const ImageSlider = ({
   const dispatch = useAppDispatch();
 
   const refImage = useRef<HTMLImageElement>(null);
-  const refSlider = useRef(null);
+  const refSlider = useRef<HTMLDivElement>(null);
+  const [isScrolling, setIsScrolling] = useState<boolean>(false);
+
+  useEffect(() => {
+    refSlider.current?.addEventListener("scrollend", () =>
+      setIsScrolling(false)
+    );
+
+    return () => {
+      refSlider.current?.removeEventListener("scrollend", () =>
+        setIsScrolling(false)
+      );
+    };
+  }, []);
 
   const handleClick = (
     event: React.MouseEvent<HTMLDivElement>,
@@ -60,7 +73,7 @@ const ImageSlider = ({
         <div className="flex w-fit h-fit gap-2 pl-[calc(5.5rem+12px)]">
           {pictures.map((pic, index) => {
             return (
-              <div key={index} className="snap-center min-w-fit">
+              <div key={index} className="snap-center snap-always min-w-fit">
                 <img
                   src={pic}
                   alt="content_picture"
@@ -79,7 +92,10 @@ const ImageSlider = ({
         </div>
       </div>
       {device === "desktop" && controller && (
-        <SlideController sliderRef={refSlider} />
+        <SlideController
+          sliderRef={refSlider.current}
+          scrollState={[isScrolling, setIsScrolling]}
+        />
       )}
     </div>
   );
@@ -87,35 +103,41 @@ const ImageSlider = ({
 
 function SlideController({
   sliderRef,
+  scrollState: [isScrolling, setIsScrolling],
 }: {
-  sliderRef: React.RefObject<HTMLDivElement>;
+  sliderRef: HTMLDivElement | null;
+  scrollState: [boolean, (newState: boolean) => void];
 }) {
   const handleClick = (dir: "left" | "right") => {
     if (dir === "left") {
-      sliderRef.current?.scrollBy({
+      sliderRef?.scrollBy({
         left: -500,
         behavior: "smooth",
       });
     } else if (dir === "right") {
-      sliderRef.current?.scrollBy({
+      sliderRef?.scrollBy({
         left: 500,
         behavior: "smooth",
       });
     }
+
+    setIsScrolling(true);
   };
 
   const buttonContainerClass =
-    "absolute top-0 h-full w-20 flex justify-center items-center opacity-0 transition-opacity group-hover/image-slider:opacity-100";
+    "absolute top-0 h-full w-20 flex justify-center items-center opacity-0 transition-opacity group-hover/image-slider:opacity-100" +
+    " display-none";
 
   return (
     <>
-      <div className={`${buttonContainerClass} left-0 -translate-x-[100%]`}>
-        <IconButton onClick={() => handleClick("left")}>
+      <div
+        className={`${buttonContainerClass} left-0 -translate-x-[100%] none`}>
+        <IconButton onClick={() => !isScrolling && handleClick("left")}>
           <LeftArrowIcon />
         </IconButton>
       </div>
       <div className={`${buttonContainerClass} right-0 translate-x-[100%]`}>
-        <IconButton onClick={() => handleClick("right")}>
+        <IconButton onClick={() => !isScrolling && handleClick("right")}>
           <RightArrowIcon />
         </IconButton>
       </div>

@@ -1,8 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 const enum PopupTypes {
-    ALERT_BOX = "alert_box",
-    BOTTOM_NAV = "bottom_nav"
+    POPUP_NAVBAR,
+    BOTTOM_NAV
 }
 
 export interface IOption { id: number, title: string; color?: "tomato-red" | "black"; onClick?: () => void }
