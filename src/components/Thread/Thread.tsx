@@ -1,17 +1,15 @@
 import { Link } from "react-router-dom";
-import ImageSlider from "./ImageSlider";
+import ThreadHeader from "./ThreadHeader";
+import ImageSlider from "../ImageSlider";
 import {
-  TickIcon,
-  DotsIcon,
   HeartIcon,
   CommentIcon,
   RepostIcon,
   ShareIcon,
 } from "@/assets/icons/Icons";
 import { IThread, TReplier } from "@/types";
-import Stats from "./Stats";
-import { useAppDispatch } from "@/hooks/useReduxHooks";
-import { PopupTypes, openPopup } from "@/features/popupSlice";
+import Stats from "../Stats";
+import IconButton from "../IconButton";
 
 interface IThreadProps {
   data: IThread;
@@ -29,7 +27,7 @@ const Thread = ({
   const userLink = `/users/${publisher.username}`;
 
   return (
-    <div className="w-full min-h-[130px] flex rounded-md">
+    <div className="w-full flex rounded-md">
       <ThreadAside
         userLink={userLink}
         publisherPicture={publisher.picture}
@@ -51,7 +49,7 @@ const Thread = ({
 
 function ThreadAside({ userLink, publisherPicture, replies }: IThreadAside) {
   return (
-    <aside className="min-w-fit pr-3 relative">
+    <aside className="min-w-fit pr-3 relative pt-[2px]">
       <Link
         to={userLink}
         className="block w-10 h-10 rounded-full overflow-hidden">
@@ -63,9 +61,9 @@ function ThreadAside({ userLink, publisherPicture, replies }: IThreadAside) {
         />
       </Link>
       {replies.length > 0 && (
-        <div className="w-[2px] h-[calc(100%-2.5rem-12px-1.5rem)] bg-gray-400 rounded-full m-[10px_auto_0]"></div>
+        <div className="w-[2px] h-[calc(100%-83.5px)] bg-gray-400 rounded-full m-[10px_auto_0]"></div>
       )}
-      <div className="relative mt-1 w-full h-6">
+      <div className="relative mt-2 w-full h-6">
         {replies.map((reply, index) => {
           return (
             <img
@@ -82,57 +80,6 @@ function ThreadAside({ userLink, publisherPicture, replies }: IThreadAside) {
   );
 }
 
-function ThreadHeader({
-  userLink,
-  username,
-  isVerified,
-  date,
-}: {
-  userLink: string;
-  username: string;
-  isVerified?: boolean;
-  date: string;
-}) {
-  const dispatch = useAppDispatch();
-
-  return (
-    <header className="flex justify-between">
-      <div className="flex items-center">
-        <h2 className="text-md font-bold mr-[6px]">
-          <Link to={userLink}>{username}</Link>
-        </h2>
-        {isVerified && <TickIcon width={14} height={14} />}
-      </div>
-      <div className="flex">
-        <span className="text-slate-500 text-md">{date}</span>
-        <button
-          className="px-2 ml-3"
-          onClick={() =>
-            dispatch(
-              openPopup({
-                type: PopupTypes.BOTTOM_NAV,
-                config: {
-                  closeOnBackgroundClick: true,
-                  duration: 250,
-                },
-                options: [
-                  { id: 1, title: "mute" },
-                  [
-                    { id: 2, title: "hide" },
-                    { id: 3, title: "block", color: "tomato-red" },
-                    { id: 4, title: "report", color: "tomato-red" },
-                  ],
-                ],
-              })
-            )
-          }>
-          <DotsIcon />
-        </button>
-      </div>
-    </header>
-  );
-}
-
 function ThreadContent({
   children,
   pictures,
@@ -142,7 +89,7 @@ function ThreadContent({
 }) {
   return (
     <main>
-      <p className="font-thin">{children}</p>
+      <p className="whitespace-pre-line">{children}</p>
       {pictures.length > 0 && (
         <section className="mt-[8px]">
           <ImageSlider
@@ -176,24 +123,23 @@ function ThreadFooter({
 
 function ThreadInteractions() {
   return (
-    <section className="flex gap-[18px] pt-[10px] pb-[10px]">
-      <button className="btn-interaction">
+    <section className="flex gap-1 pt-[6px] pb-[5px] -ml-[7px]">
+      <IconButton type="background_scale">
         <HeartIcon
           filled={false}
           fillColor="black"
-          width="100%"
-          height="100%"
+          className="scale-125 mt-[1px] hover:text-blue-300"
         />
-      </button>
-      <button className="btn-interaction">
+      </IconButton>
+      <IconButton type="background_scale">
         <CommentIcon />
-      </button>
-      <button className="btn-interaction">
+      </IconButton>
+      <IconButton type="background_scale">
         <RepostIcon />
-      </button>
-      <button className="btn-interaction">
+      </IconButton>
+      <IconButton type="background_scale">
         <ShareIcon />
-      </button>
+      </IconButton>
     </section>
   );
 }

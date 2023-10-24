@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from "react";
 import { useAppSelector, useAppDispatch } from "@/hooks/useReduxHooks";
 import { animated, useSpring } from "@react-spring/web";
 import { PopupTypes, closePopup } from "@/features/popupSlice";
-import AlertBox from "@/components/AlertBox";
 import BottomNav from "@/components/BottomNav";
 
 const Popup = () => {
@@ -16,7 +15,7 @@ const Popup = () => {
   } = useAppSelector((state) => state.popup);
 
   const dispatch = useAppDispatch();
-  const refPopup = useRef<HTMLDivElement | null>(null);
+  const refPopup = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     api.start({
@@ -58,8 +57,6 @@ const Popup = () => {
 
   const renderAlert = () => {
     switch (type) {
-      case PopupTypes.ALERT_BOX:
-        return <AlertBox ref={refPopup} />;
       case PopupTypes.BOTTOM_NAV:
         return (
           <BottomNav

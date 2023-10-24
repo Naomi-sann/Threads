@@ -2,21 +2,15 @@ import { useEffect, useState, forwardRef } from "react";
 import { animated, useSpring } from "@react-spring/web";
 import { IOption } from "@/features/popupSlice";
 
-const BottomNav = forwardRef(
-  (
-    {
-      isClosing,
-      duration,
-      options,
-      handleClose,
-    }: {
-      isClosing: boolean;
-      duration?: number;
-      options: (IOption | IOption[])[];
-      handleClose: () => void;
-    },
-    ref: React.ForwardedRef<HTMLDivElement>
-  ) => {
+interface IPropsBottomNav {
+  isClosing: boolean;
+  duration?: number;
+  options: (IOption | IOption[])[];
+  handleClose: () => void;
+}
+
+const BottomNav = forwardRef<HTMLDivElement, IPropsBottomNav>(
+  ({ isClosing, duration, options, handleClose }, ref) => {
     const [openStatus, setOpenStatus] = useState({
       isDown: false,
       y: 0,
