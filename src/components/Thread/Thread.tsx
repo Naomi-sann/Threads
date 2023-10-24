@@ -9,6 +9,7 @@ import {
 } from "@/assets/icons/Icons";
 import { IThread, TReplier } from "@/types";
 import Stats from "../Stats";
+import IconButton from "../IconButton";
 
 interface IThreadProps {
   data: IThread;
@@ -26,7 +27,7 @@ const Thread = ({
   const userLink = `/users/${publisher.username}`;
 
   return (
-    <div className="w-full min-h-[130px] flex rounded-md">
+    <div className="w-full flex rounded-md">
       <ThreadAside
         userLink={userLink}
         publisherPicture={publisher.picture}
@@ -48,7 +49,7 @@ const Thread = ({
 
 function ThreadAside({ userLink, publisherPicture, replies }: IThreadAside) {
   return (
-    <aside className="min-w-fit pr-3 relative">
+    <aside className="min-w-fit pr-3 relative pt-[2px]">
       <Link
         to={userLink}
         className="block w-10 h-10 rounded-full overflow-hidden">
@@ -60,9 +61,9 @@ function ThreadAside({ userLink, publisherPicture, replies }: IThreadAside) {
         />
       </Link>
       {replies.length > 0 && (
-        <div className="w-[2px] h-[calc(100%-2.5rem-12px-1.5rem)] bg-gray-400 rounded-full m-[10px_auto_0]"></div>
+        <div className="w-[2px] h-[calc(100%-83.5px)] bg-gray-400 rounded-full m-[10px_auto_0]"></div>
       )}
-      <div className="relative mt-1 w-full h-6">
+      <div className="relative mt-2 w-full h-6">
         {replies.map((reply, index) => {
           return (
             <img
@@ -88,7 +89,7 @@ function ThreadContent({
 }) {
   return (
     <main>
-      <p>{children}</p>
+      <p className="whitespace-pre-line">{children}</p>
       {pictures.length > 0 && (
         <section className="mt-[8px]">
           <ImageSlider
@@ -122,24 +123,23 @@ function ThreadFooter({
 
 function ThreadInteractions() {
   return (
-    <section className="flex gap-[18px] pt-[10px] pb-[10px]">
-      <button className="btn-interaction">
+    <section className="flex gap-1 pt-[6px] pb-[5px] -ml-[7px]">
+      <IconButton type="background_scale">
         <HeartIcon
           filled={false}
           fillColor="black"
-          width="100%"
-          height="100%"
+          className="scale-125 mt-[1px] hover:text-blue-300"
         />
-      </button>
-      <button className="btn-interaction">
+      </IconButton>
+      <IconButton type="background_scale">
         <CommentIcon />
-      </button>
-      <button className="btn-interaction">
+      </IconButton>
+      <IconButton type="background_scale">
         <RepostIcon />
-      </button>
-      <button className="btn-interaction">
+      </IconButton>
+      <IconButton type="background_scale">
         <ShareIcon />
-      </button>
+      </IconButton>
     </section>
   );
 }

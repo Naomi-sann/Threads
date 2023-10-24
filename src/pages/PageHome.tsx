@@ -1,6 +1,7 @@
 import { IThread } from "@/types";
 import Thread from "@/components/Thread/Thread";
 import Button from "@/components/Button";
+import { useAppSelector } from "@/hooks/useReduxHooks";
 
 /* dummy datas */
 const threads: IThread[] = [
@@ -61,7 +62,7 @@ const threads: IThread[] = [
 
       isVerified: false,
     },
-    content: "good morning everyone! having a great day at @google",
+    content: "人際失敗\n讀書失敗\n戀愛失敗\n家庭失敗\n長相失敗\n焦慮成功",
     pictures: [],
     likes: 12,
     date: "15m",
@@ -150,14 +151,18 @@ const threads: IThread[] = [
 ];
 
 const Home = () => {
+  const device = useAppSelector((state) => state.device.device);
+
   return (
     <div className="flex flex-col items-center">
-      <div className="w-threadWidth flex justify-center">
-        <StartThread />
-      </div>
+      {device === "desktop" && (
+        <div className="w-threadWidth flex justify-center">
+          <StartThread />
+        </div>
+      )}
       {threads.map((t) => (
         <div
-          className="w-threadWidth border-b border-gray-400 p-3 desktop:px-0"
+          className="w-threadWidth h-fit border-b border-gray-400 px-3 py-4 desktop:px-0"
           key={t.id}>
           <Thread data={t} />
         </div>

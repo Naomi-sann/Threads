@@ -78,6 +78,7 @@ const HeartIcon = ({
   strokeColor = "black",
   width = "25",
   height = "25",
+  className,
 }: {
   filled: boolean;
   fillColor?: string;
@@ -85,12 +86,14 @@ const HeartIcon = ({
   strokeColor?: string;
   width?: string;
   height?: string;
+  className?: string;
 }) => {
   return (
     <svg
       width={width}
       height={height}
       viewBox="0 0 25 24"
+      className={className}
       xmlns="http://www.w3.org/2000/svg">
       <path
         d="M20.6483 3.38499C17.344 0.720243 13.9651 3.38499 12.75 4.60988C11.5348 3.38499 8.15603 0.720243 4.85169 3.38499C1.54734 6.04975 0.82919 11.5791 5.45925 16.2464C10.0893 20.9137 12.75 21.7585 12.75 21.7585C12.75 21.7585 15.4107 20.9137 20.0407 16.2464C24.6708 11.5791 23.9526 6.04975 20.6483 3.38499Z"
@@ -226,9 +229,8 @@ const CommentIcon = ({
 }) => {
   return (
     <svg
-      width="22"
-      height="22"
-      viewBox="0 0 22 22"
+      viewBox="0 0 24 24"
+      className="-mr-[2px] mt-[2px] scale-110"
       fill="none"
       xmlns="http://www.w3.org/2000/svg">
       <path
@@ -244,9 +246,8 @@ const CommentIcon = ({
 const RepostIcon = ({ fillColor = "black" }: { fillColor?: string }) => {
   return (
     <svg
-      width="18"
-      height="23"
       viewBox="0 0 18 23"
+      className=""
       fill="none"
       xmlns="http://www.w3.org/2000/svg">
       <path
@@ -260,9 +261,8 @@ const RepostIcon = ({ fillColor = "black" }: { fillColor?: string }) => {
 const ShareIcon = () => {
   return (
     <svg
-      width="23"
-      height="23"
       viewBox="0 0 23 23"
+      className="mt-[3px] scale-125"
       fill="none"
       xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_106_1443)">

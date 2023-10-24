@@ -23,6 +23,7 @@ export default {
       colors: {
         gray: {
           200: "var(--clr-light-gray)",
+          300: "var(--clr-300-gray)",
           400: "var(--clr-medium-gray)",
           600: "var(--clr-gray)",
           800: "var(--clr-dark-gray)",

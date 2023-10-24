@@ -27,6 +27,7 @@ const ImageSlider = ({
     refSlider.current?.addEventListener("scrollend", () =>
       setIsScrolling(false)
     );
+    console.log(isScrolling);
 
     return () => {
       refSlider.current?.removeEventListener("scrollend", () =>
@@ -63,7 +64,7 @@ const ImageSlider = ({
   };
 
   return (
-    <div className="group/image-slider relative -ml-[calc(2.5rem+12px)] overflow-visible pb-2">
+    <div className="group/image-slider relative -ml-[calc(2.5rem+12px)] overflow-visible">
       <div
         className={`picture-container w-${
           sliderSize?.size ? `[${sliderSize.size}]` : "fullThread"
@@ -109,6 +110,8 @@ function SlideController({
   scrollState: [boolean, (newState: boolean) => void];
 }) {
   const handleClick = (dir: "left" | "right") => {
+    console.log("hehe");
+
     if (dir === "left") {
       sliderRef?.scrollBy({
         left: -500,

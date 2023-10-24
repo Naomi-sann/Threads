@@ -5,10 +5,11 @@ interface IPropsIconButton {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   children: React.ReactNode;
   theme?: "light" | "dark";
+  style?: React.CSSProperties;
 }
 
 const IconButton = forwardRef<HTMLButtonElement, IPropsIconButton>(
-  ({ type = "static", onClick, children, theme = "light" }, ref) => {
+  ({ style, type = "static", onClick, children, theme = "light" }, ref) => {
     let className: string = "";
 
     switch (type) {
@@ -21,7 +22,7 @@ const IconButton = forwardRef<HTMLButtonElement, IPropsIconButton>(
         break;
       }
       case "background_scale": {
-        className = `w-8 h-8 relative rounded-full flex justify-center items-center p-[8px] hover:before:w-[calc(100%+5px)] hover:before:h-[calc(100%+5px)] before:transition-all before:w-0 before:h-0 before:absolute before:bg-gray-200 before:inset-1/2 before:-translate-y-1/2 before:-translate-x-1/2 before:-z-[1] before:rounded-full`;
+        className = `w-8 h-8 relative rounded-full flex justify-center items-center p-[8px] hover:before:w-[calc(100%+5px)] hover:before:h-[calc(100%+5px)] before:transition-all before:w-0 before:h-0 before:absolute before:bg-gray-200 before:inset-1/2 before:-translate-y-1/2 before:-translate-x-1/2 before:-z-[1] before:rounded-full active:scale-[.86] transition will-change-transform`;
         break;
       }
       default:
@@ -29,7 +30,11 @@ const IconButton = forwardRef<HTMLButtonElement, IPropsIconButton>(
     }
 
     return (
-      <button className={className} onClick={onClick || undefined} ref={ref}>
+      <button
+        className={className}
+        onClick={onClick || undefined}
+        ref={ref}
+        style={style}>
         {children}
       </button>
     );

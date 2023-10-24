@@ -51,30 +51,35 @@ function ThreadHeader({
   };
 
   return (
-    <header className="flex justify-between h-5">
-      <div className="flex pt-[2px]">
-        <h2 className="text-md font-bold mr-[6px] -mt-[6px]">
+    <header className="flex justify-between h-5 mb-[6px]">
+      <div className="flex pt-[2px] items-center -mt-[1px]">
+        <h2 className="text-md font-bold mr-[6px]">
           <Link to={userLink}>{username}</Link>
         </h2>
         {isVerified && <TickIcon width={14} height={14} />}
       </div>
       <div className="flex">
-        <span className="text-slate-500 text-md flex items-center mr-2">
+        <span className="text-gray-600 text-[15px] flex items-center mr-2">
           {date}
         </span>
         <div className="relative">
           <IconButton
             type="background_scale"
             onClick={handleOptionsClick}
-            ref={refMoreButton}>
+            ref={refMoreButton}
+            style={{ marginTop: "-5.5px" }}>
             <DotsIcon />
           </IconButton>
           {isPopupOpen && (
             <PopupNavbar ref={refPopup}>
               <PopupNavbarOption>Mute</PopupNavbarOption>
               <PopupNavbarOption>Hide</PopupNavbarOption>
-              <PopupNavbarOption color="red">Block</PopupNavbarOption>
-              <PopupNavbarOption color="red">Report</PopupNavbarOption>
+              <PopupNavbarOption color="var(--clr-tomato-red)">
+                Block
+              </PopupNavbarOption>
+              <PopupNavbarOption color="var(--clr-tomato-red)">
+                Report
+              </PopupNavbarOption>
             </PopupNavbar>
           )}
         </div>
