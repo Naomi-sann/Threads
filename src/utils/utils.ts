@@ -78,6 +78,4 @@ function groupDigits(number: number | string = "12345678"): string {
     return result.join("");
 }
 
-groupDigits();
-
 export { checkPaths, getMultiDeviceCursorPosition, groupDigits };
