@@ -9,9 +9,9 @@ const threads: IThread[] = [
     id: "TEST",
     publisher: {
       id: "",
-      username: "kobeni",
+      username: "MaxBlagun",
       picture: new URL(
-        "/src/assets/images/2feff08e009724a3f8c750a01185ecd3.jpg",
+        "/src/assets/images/image-maxblagun.png",
         import.meta.url
       ).href,
       isVerified: true,
@@ -26,7 +26,7 @@ const threads: IThread[] = [
         username: "HaHa",
         isVerified: false,
         picture: new URL(
-          "/src/assets/images/__angel_devil_chainsaw_man_drawn_by_champi__sample-a5f848a25440e1d9c9f472adc1e061cf.jpg",
+          "/src/assets/images/image-juliusomo.png",
           import.meta.url
         ).href,
       },
@@ -35,7 +35,7 @@ const threads: IThread[] = [
         username: "HaHa",
         isVerified: false,
         picture: new URL(
-          "/src/assets/images/cities-in-switzerland-1920x1080.webp",
+          "/src/assets/images/image-ramsesmiron.png",
           import.meta.url
         ).href,
       },
@@ -43,10 +43,8 @@ const threads: IThread[] = [
         id: "wacda",
         username: "HaHa",
         isVerified: false,
-        picture: new URL(
-          "/src/assets/images/avatars-Ywx1lArS4ahFDVws-K24FuA-t500x500.jpg",
-          import.meta.url
-        ).href,
+        picture: new URL("/src/assets/images/download.jpg", import.meta.url)
+          .href,
       },
     ],
   },
@@ -56,7 +54,7 @@ const threads: IThread[] = [
       id: "",
       username: "marin_kitagawa",
       picture: new URL(
-        "/src/assets/images/308226132_123324800493904_7027576226844336253_n.jpg",
+        "/src/assets/images/image-ramsesmiron.webp",
         import.meta.url
       ).href,
 
@@ -72,26 +70,20 @@ const threads: IThread[] = [
     id: "TEST_3",
     publisher: {
       id: "",
-      username: "lucy",
+      username: "Julie",
       picture: new URL(
-        "/src/assets/images/4a207a19f6b74f2b457e9a500174b928.jpg",
+        "/src/assets/images/image-juliusomo.webp",
         import.meta.url
       ).href,
     },
-    content: "one of the best video games i've ever played was made by @EA :*)",
+    content: "Some of my shots from switzerland!",
     pictures: [
+      new URL("/src/assets/images/download.jpg", import.meta.url).href,
       new URL(
-        "/src/assets/images/Need for Speed™ Most Wanted 2023-07-20 20-45-59.00_00_28_25.Still007.png",
+        "/src/assets/images/cities-in-switzerland-1920x1080.webp",
         import.meta.url
       ).href,
-      new URL(
-        "/src/assets/images/Need for Speed™ Most Wanted 2023-07-20 20-45-59.00_00_33_09.Still002.png",
-        import.meta.url
-      ).href,
-      new URL(
-        "/src/assets/images/Need for Speed™ Most Wanted 2023-07-20 20-45-59.00_01_30_23.Still003.png",
-        import.meta.url
-      ).href,
+      new URL("/src/assets/images/download.jpg", import.meta.url).href,
     ],
     likes: 12,
     date: "2h",
@@ -101,14 +93,14 @@ const threads: IThread[] = [
     id: "TEST_4",
     publisher: {
       id: "",
-      username: "lucy",
+      username: "ABCDEEE",
       picture: new URL(
-        "/src/assets/images/4a207a19f6b74f2b457e9a500174b928.jpg",
+        "/src/assets/images/image-maxblagun.png",
         import.meta.url
       ).href,
       isVerified: true,
     },
-    content: "one of the best video games i've ever played was made by @EA :*)",
+    content: "my first thread\n hope you guys are doing awesome.",
     pictures: [],
     likes: 12,
     date: "6h",
@@ -119,13 +111,10 @@ const threads: IThread[] = [
     publisher: {
       id: "",
       username: "lucy",
-      picture: new URL(
-        "/src/assets/images/4a207a19f6b74f2b457e9a500174b928.jpg",
-        import.meta.url
-      ).href,
       isVerified: true,
     },
-    content: "one of the best video games i've ever played was made by @EA :*)",
+    content:
+      "This is a mock sentence, the current site is under development and is being built, all the content and text messages here are only to have a visual test on the layout and the entire design of it so please do not consider it as a serious or a product-ready webpage and be aware.",
     pictures: [],
     likes: 12,
     date: "57s",
@@ -135,17 +124,37 @@ const threads: IThread[] = [
     id: "TEST_6",
     publisher: {
       id: "",
-      username: "lucy",
-      picture: new URL(
-        "/src/assets/images/4a207a19f6b74f2b457e9a500174b928.jpg",
-        import.meta.url
-      ).href,
+      username: "MY_Username",
+      picture: undefined,
       isVerified: true,
     },
-    content: "one of the best video games i've ever played was made by @EA :*)",
+    content:
+      "Helllllllooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo let's all have a great day!!!",
     pictures: [],
     likes: 12,
     date: "4d",
+    replies: [],
+  },
+  {
+    id: "TEST_7",
+    publisher: {
+      id: "ford_official",
+      username: "Ford",
+      picture:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM4BrCyFD93GeDuDFAnZO_ulJlNWw_tpnzJTZIhYS3&s",
+      isVerified: true,
+    },
+    content: "The new ford dark horse 2024 design view",
+    pictures: [
+      "https://www.ford.com/cmslibs/content/dam/vdm_ford/live/en_us/ford/nameplate/mustang/2024/collections/equipment/3-2/24_Mustang_Dark_Horse_13_32.jpg/jcr:content/renditions/cq5dam.web.768.768.jpeg",
+      "https://www.ford.com/cmslibs/content/dam/vdm_ford/live/en_us/ford/nameplate/mustang/2024/collections/equipment/3-2/24_Mustang_Dark_Horse_01_32.jpg/jcr:content/renditions/cq5dam.web.768.768.jpeg",
+      "https://www.ford.com/cmslibs/content/dam/vdm_ford/live/en_us/ford/nameplate/mustang/2024/collections/equipment/3-2/24_Mustang_Dark_Horse_11_32.jpg/jcr:content/renditions/cq5dam.web.768.768.jpeg",
+      "https://images.wsj.net/im-825812?width=700&size=1.5005861664712778&pixel_ratio=1.5",
+      "https://cdn.shopify.com/s/files/1/1310/3673/files/Mustang-Dark-Horse-front-view-Carbon-Revolution-A-Recognized-Leader-in-the-Sector.jpg?v=1680144754",
+      "https://cdn.shopify.com/s/files/1/1310/3673/files/Mustang-Dark-Horse-from-top-Mystichrome-Color-shifting-Paint-From-Blue-to-Amber.jpg?v=1680144868",
+    ],
+    likes: 12_267_925,
+    date: "11d",
     replies: [],
   },
 ];
@@ -176,10 +185,7 @@ function StartThread() {
     <div className="w-full py-3 border-b-[1px] border-gray-400 flex justify-between items-center">
       <img
         src={
-          new URL(
-            "../assets/images/avatars-Ywx1lArS4ahFDVws-K24FuA-t500x500.jpg",
-            import.meta.url
-          ).href
+          new URL("../assets/images/image-maxblagun.png", import.meta.url).href
         }
         alt="profile picture"
         width="40"

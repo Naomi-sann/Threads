@@ -10,6 +10,8 @@ interface IImageSliderProps {
   sliderSize?: { breakPoint: number; size: string | number };
 }
 
+const slideState = { pictureLength: 0, slideIndex: 0 };
+
 const ImageSlider = ({
   controller,
   pictures,
@@ -22,19 +24,6 @@ const ImageSlider = ({
   const refImage = useRef<HTMLImageElement>(null);
   const refSlider = useRef<HTMLDivElement>(null);
   const [isScrolling, setIsScrolling] = useState<boolean>(false);
-
-  useEffect(() => {
-    refSlider.current?.addEventListener("scrollend", () =>
-      setIsScrolling(false)
-    );
-    console.log(isScrolling);
-
-    return () => {
-      refSlider.current?.removeEventListener("scrollend", () =>
-        setIsScrolling(false)
-      );
-    };
-  }, []);
 
   const handleClick = (
     event: React.MouseEvent<HTMLDivElement>,
@@ -53,6 +42,22 @@ const ImageSlider = ({
       })
     );
   };
+
+  useEffect(() => {
+    slideState.pictureLength = pictures.length;
+
+    refSlider.current?.scroll({ left: 500 * slideState.slideIndex });
+
+    refSlider.current?.addEventListener("scrollend", () =>
+      setIsScrolling(false)
+    );
+
+    return () => {
+      refSlider.current?.removeEventListener("scrollend", () =>
+        setIsScrolling(false)
+      );
+    };
+  }, []);
 
   const handleScroll = (e: React.UIEvent) => {
     const target = e.target as HTMLDivElement;
@@ -94,8 +99,8 @@ const ImageSlider = ({
       </div>
       {device === "desktop" && controller && (
         <SlideController
-          sliderRef={refSlider.current}
-          scrollState={[isScrolling, setIsScrolling]}
+          refSlider={refSlider}
+          scrollState={{ isScrolling, setIsScrolling }}
         />
       )}
     </div>
@@ -103,25 +108,41 @@ const ImageSlider = ({
 };
 
 function SlideController({
-  sliderRef,
-  scrollState: [isScrolling, setIsScrolling],
+  refSlider,
+  scrollState: { isScrolling, setIsScrolling },
 }: {
-  sliderRef: HTMLDivElement | null;
-  scrollState: [boolean, (newState: boolean) => void];
+  refSlider: React.RefObject<HTMLDivElement> | null;
+  scrollState: {
+    isScrolling: boolean;
+    setIsScrolling: (newState: boolean) => void;
+  };
 }) {
-  const handleClick = (dir: "left" | "right") => {
-    console.log("hehe");
+  useEffect(() => {
+    refSlider?.current?.addEventListener("scrollend", () =>
+      setIsScrolling(false)
+    );
 
+    return () => {
+      refSlider?.current?.removeEventListener("scrollend", () =>
+        setIsScrolling(false)
+      );
+    };
+  }, []);
+
+  const handleScrollClick = (dir: "left" | "right") => {
     if (dir === "left") {
-      sliderRef?.scrollBy({
+      refSlider?.current?.scrollBy({
         left: -500,
         behavior: "smooth",
       });
+      slideState.slideIndex > 0 && slideState.slideIndex--;
     } else if (dir === "right") {
-      sliderRef?.scrollBy({
+      refSlider?.current?.scrollBy({
         left: 500,
         behavior: "smooth",
       });
+      slideState.slideIndex < slideState.pictureLength - 1 &&
+        slideState.slideIndex++;
     }
 
     setIsScrolling(true);
@@ -135,12 +156,12 @@ function SlideController({
     <>
       <div
         className={`${buttonContainerClass} left-0 -translate-x-[100%] none`}>
-        <IconButton onClick={() => !isScrolling && handleClick("left")}>
+        <IconButton onClick={() => !isScrolling && handleScrollClick("left")}>
           <LeftArrowIcon />
         </IconButton>
       </div>
       <div className={`${buttonContainerClass} right-0 translate-x-[100%]`}>
-        <IconButton onClick={() => !isScrolling && handleClick("right")}>
+        <IconButton onClick={() => !isScrolling && handleScrollClick("right")}>
           <RightArrowIcon />
         </IconButton>
       </div>

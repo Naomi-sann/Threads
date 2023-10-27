@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import ThreadHeader from "./ThreadHeader";
-import ImageSlider from "../ImageSlider";
+import ImageSlider from "@/components/ImageSlider";
 import {
   HeartIcon,
   CommentIcon,
@@ -8,8 +8,9 @@ import {
   ShareIcon,
 } from "@/assets/icons/Icons";
 import { IThread, TReplier } from "@/types";
-import Stats from "../Stats";
-import IconButton from "../IconButton";
+import Stats from "@/components/Stats";
+import IconButton from "@/components/IconButton";
+import { groupDigits } from "@/utils/utils";
 
 interface IThreadProps {
   data: IThread;
@@ -54,7 +55,11 @@ function ThreadAside({ userLink, publisherPicture, replies }: IThreadAside) {
         to={userLink}
         className="block w-10 h-10 rounded-full overflow-hidden">
         <img
-          src={publisherPicture}
+          src={
+            publisherPicture ||
+            new URL("../../assets/images/user-default.jpg", import.meta.url)
+              .href
+          }
           alt="yet to be added..."
           className="w-full h-full object-cover"
           loading="lazy"
@@ -89,7 +94,7 @@ function ThreadContent({
 }) {
   return (
     <main>
-      <p className="whitespace-pre-line">{children}</p>
+      <p className="whitespace-pre-line break-words">{children}</p>
       {pictures.length > 0 && (
         <section className="mt-[8px]">
           <ImageSlider
@@ -114,8 +119,8 @@ function ThreadFooter({
     <footer className="w-fit text-gray-800">
       <ThreadInteractions />
       <Stats
-        leftStat={`${repliesCount} replies`}
-        rightStat={`${likes} likes`}
+        leftStat={`${groupDigits(repliesCount)} replies`}
+        rightStat={`${groupDigits(likes)} likes`}
       />
     </footer>
   );

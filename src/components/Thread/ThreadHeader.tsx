@@ -74,10 +74,10 @@ function ThreadHeader({
             <PopupNavbar ref={refPopup}>
               <PopupNavbarOption>Mute</PopupNavbarOption>
               <PopupNavbarOption>Hide</PopupNavbarOption>
-              <PopupNavbarOption color="var(--clr-tomato-red)">
+              <PopupNavbarOption color="theme(colors.tomatoRed)">
                 Block
               </PopupNavbarOption>
-              <PopupNavbarOption color="var(--clr-tomato-red)">
+              <PopupNavbarOption color="theme(colors.tomatoRed)">
                 Report
               </PopupNavbarOption>
             </PopupNavbar>
