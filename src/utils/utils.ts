@@ -55,5 +55,29 @@ function getMultiDeviceCursorPosition(e: (MouseEvent | TouchEvent) | (React.Mous
     return { x: 0, y: 0 }
 }
 
+function groupDigits(number: number | string = "12345678"): string {
+    let initialValue;
+    if (typeof number === "number")
+        initialValue = number.toString();
+    else initialValue = number;
 
-export { checkPaths, getMultiDeviceCursorPosition };
+    let i = initialValue.length;
+    let digitCounter = 0;
+
+    const result = initialValue.split("");
+
+    while (i--) {
+        if (digitCounter < 2)
+            digitCounter++;
+        else {
+            result.splice(i, 0, ",");
+            digitCounter = 0;
+        }
+    }
+
+    return result.join("");
+}
+
+groupDigits();
+
+export { checkPaths, getMultiDeviceCursorPosition, groupDigits };
