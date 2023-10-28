@@ -4,8 +4,8 @@ import NavMenu from "@/containers/NavMenu";
 const MobileTemplate = () => {
   return (
     <>
-      <View />
-      <section className="w-full h-menuHeight absolute bottom-0 bg-white">
+      <View device="mobile" />
+      <section className="w-full h-menuHeight absolute bottom-0 bg-menuColor backdrop-blur-menuBlur">
         <NavMenu />
       </section>
     </>

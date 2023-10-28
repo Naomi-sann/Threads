@@ -15,5 +15,6 @@ module.exports = {
       { allowConstantExport: true },
     ],
     "react/prop-types": "off",
+    "@typescript-eslint/no-explicit-any": ["off"],
   },
 };

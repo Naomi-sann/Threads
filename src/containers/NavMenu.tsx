@@ -74,7 +74,7 @@ const NavMenu = () => {
 
           return (
             <Link
-              className="group/nav-item w-[calc(100%/5-5vw)] h-16 flex justify-center items-center cursor-pointer"
+              className="group/nav-item w-full h-full flex justify-center items-center cursor-pointer"
               key={index}
               to={isMultiPath ? path[0] : path}
               draggable="false"
