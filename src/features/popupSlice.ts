@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 const enum PopupTypes {
-    POPUP_NAVBAR,
+    ALERT_POPUP,
     BOTTOM_NAV
 }
 

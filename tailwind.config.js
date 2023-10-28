@@ -18,7 +18,7 @@ export default {
         fullThread: "calc(2.5rem+12px)",
       },
       height: {
-        menuHeight: "75px",
+        menuHeight: "68px",
       },
       colors: {
         gray: {
@@ -31,6 +31,12 @@ export default {
         },
         tomatoRed: "var(--clr-tomato-red)",
         themeColor: "var(--clr-theme)",
+      },
+      backgroundColor: {
+        menuColor: "rgba(255,255,255,0.85)",
+      },
+      backdropBlur: {
+        menuBlur: "28.5px",
       },
       fontSize: {
         md: "17px",

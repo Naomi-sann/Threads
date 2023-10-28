@@ -4,7 +4,7 @@ const View = ({ device }: { device?: "desktop" | "mobile" | null }) => {
   return (
     <section
       id="view"
-      className={`w-full h-[calc(100%-theme(height.menuHeight))] overflow-y-auto overflow-x-hidden desktop:h-full`}>
+      className={`w-full h-full overflow-y-auto overflow-x-hidden`}>
       {device === "desktop" && <div className="w-full h-menuHeight"></div>}
       <div className="min-h-[calc(100%-75px*2)]">
         <Outlet />
@@ -29,6 +29,7 @@ const View = ({ device }: { device?: "desktop" | "mobile" | null }) => {
           </li>
         </ul>
       </footer>
+      {device === "mobile" && <div className="w-full h-menuHeight"></div>}
     </section>
   );
 };

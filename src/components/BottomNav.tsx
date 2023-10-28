@@ -1,23 +1,24 @@
 import { useEffect, useState, forwardRef } from "react";
+import usePopupContext from "@/hooks/usePopupContext";
 import { animated, useSpring } from "@react-spring/web";
-import { IOption } from "@/features/popupSlice";
+import { IOption, closePopup } from "@/features/popupSlice";
+import { PopupStates } from "@/contexts/PopupContext";
+import { useAppDispatch } from "@/hooks/useReduxHooks";
 
 interface IPropsBottomNav {
-  isClosing: boolean;
   duration?: number;
   options: (IOption | IOption[])[];
-  handleClose: () => void;
 }
 
 const BottomNav = forwardRef<HTMLDivElement, IPropsBottomNav>(
-  ({ isClosing, duration, options, handleClose }, ref) => {
+  ({ duration, options }, ref) => {
     const [openStatus, setOpenStatus] = useState({
       isDown: false,
       y: 0,
       initialY: 0,
       yShift: 0,
     });
-    const [navSpring, api] = useSpring(() => ({
+    const [navSprings, api] = useSpring(() => ({
       from: {
         y: "100%",
       },
@@ -29,8 +30,18 @@ const BottomNav = forwardRef<HTMLDivElement, IPropsBottomNav>(
       },
     }));
 
+    const dispatch = useAppDispatch();
+
+    const {
+      popupState,
+      handlers: { handleClose },
+    } = usePopupContext();
+
     useEffect(() => {
-      isClosing &&
+      // console.log(popupState === PopupStates.CLOSING);
+
+      api.start();
+      popupState.popupState === PopupStates.CLOSING &&
         api.start({
           from: {
             y: (openStatus.yShift <= 0 ? 0 : openStatus.yShift) + "px",
@@ -42,7 +53,7 @@ const BottomNav = forwardRef<HTMLDivElement, IPropsBottomNav>(
             duration,
           },
         });
-    }, [isClosing]);
+    }, [popupState]);
 
     const handleDown = (e: React.TouchEvent) => {
       setOpenStatus({
@@ -71,7 +82,12 @@ const BottomNav = forwardRef<HTMLDivElement, IPropsBottomNav>(
     };
 
     const handleUp = () => {
-      if (openStatus.yShift > 75) handleClose();
+      if (openStatus.yShift > 75)
+        handleClose({
+          onClose() {
+            dispatch(closePopup());
+          },
+        });
       else
         api.start({
           to: {
@@ -87,7 +103,7 @@ const BottomNav = forwardRef<HTMLDivElement, IPropsBottomNav>(
       <animated.div
         id="popup-nav"
         className="w-full h-fit absolute bg-white rounded-tl-[1rem] rounded-tr-[1rem] bottom-0 left-0"
-        style={{ ...navSpring }}
+        style={{ ...navSprings }}
         ref={ref}>
         <div
           className="w-full h-10 before:w-12 before:h-1 before:bg-gray-600 before:absolute before:rounded-full before:top-3 before:left-1/2 before:-translate-x-1/2 cursor-grab active:cursor-grabbing"
