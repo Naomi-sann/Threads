@@ -5,7 +5,7 @@ const View = ({ device }: { device?: "desktop" | "mobile" | null }) => {
     <section
       id="view"
       className={`w-full h-full overflow-y-auto overflow-x-hidden`}>
-      {device === "desktop" && <div className="w-full h-menuHeight"></div>}
+      {device === "desktop" && <div className="w-full h-desktopMenuHeight"></div>}
       <div className="min-h-[calc(100%-75px*2)]">
         <Outlet />
       </div>
@@ -29,7 +29,7 @@ const View = ({ device }: { device?: "desktop" | "mobile" | null }) => {
           </li>
         </ul>
       </footer>
-      {device === "mobile" && <div className="w-full h-menuHeight"></div>}
+      {device === "mobile" && <div className="w-full h-mobileMenuHeight"></div>}
     </section>
   );
 };

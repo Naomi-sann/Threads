@@ -106,7 +106,7 @@ const BottomNav = forwardRef<HTMLDivElement, IPropsBottomNav>(
         style={{ ...navSprings }}
         ref={ref}>
         <div
-          className="w-full h-10 before:w-12 before:h-1 before:bg-gray-600 before:absolute before:rounded-full before:top-3 before:left-1/2 before:-translate-x-1/2 cursor-grab active:cursor-grabbing"
+          className="w-full h-10 before:w-12 before:h-1 before:bg-gray-150 before:absolute before:rounded-full before:top-3 before:left-1/2 before:-translate-x-1/2 cursor-grab active:cursor-grabbing"
           onTouchStart={handleDown}
           onTouchMove={handleMove}
           onTouchEnd={handleUp}></div>
@@ -127,7 +127,7 @@ function OptionList({ options }: { options: (IOption | IOption[])[] }) {
             res.push(
               <li
                 key={opt.id}
-                className={`h-14 pl-5 pr-5 bg-gray-200 flex items-center cursor-pointer active:bg-gray-400 select-none border-b-[1px] border-b-gray-600 last:border-b-0`}>
+                className={`h-14 pl-5 pr-5 bg-gray-200 flex items-center cursor-pointer active:bg-gray-150 select-none border-b-[1px] border-b-gray-300 last:border-b-0`}>
                 <button>
                   <span
                     className={`${
@@ -149,7 +149,7 @@ function OptionList({ options }: { options: (IOption | IOption[])[] }) {
         return (
           <li
             key={option.id}
-            className="h-14 pl-5 pr-5 mb-2 bg-gray-200 rounded-xl flex items-center cursor-pointer active:bg-gray-400 select-none">
+            className="h-14 pl-5 pr-5 mb-2 bg-gray-200 rounded-xl flex items-center cursor-pointer active:bg-gray-150 select-none">
             <button>
               <span
                 className={`${
