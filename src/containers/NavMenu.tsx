@@ -38,7 +38,7 @@ const navItems: {
         <HeartIcon
           filled={isActive}
           fillColor={fillColor}
-          strokeColor="var(--clr-gray)"
+          strokeColor="var(--clr-500-gray)"
           strokeWidth={3}
         />
       );
@@ -74,7 +74,7 @@ const NavMenu = () => {
 
           return (
             <Link
-              className="group/nav-item w-full h-full flex justify-center items-center cursor-pointer"
+              className="group/nav-item relative w-full h-full flex justify-center items-center cursor-pointer before:w-full before:absolute before:h-[96%] before:opacity-0 before:transition-[opacity_scale] before:scale-75 before:-z-10 before:rounded-lg before:bg-gray-200 hover:before:opacity-100 hover:before:scale-90"
               key={index}
               to={isMultiPath ? path[0] : path}
               draggable="false"

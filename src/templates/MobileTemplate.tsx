@@ -5,7 +5,7 @@ const MobileTemplate = () => {
   return (
     <>
       <View device="mobile" />
-      <section className="w-full h-menuHeight absolute bottom-0 bg-menuColor backdrop-blur-menuBlur">
+      <section className="w-full h-mobileMenuHeight absolute bottom-0 bg-menuColor backdrop-blur-menuBlur">
         <NavMenu />
       </section>
     </>

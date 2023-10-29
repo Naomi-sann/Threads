@@ -7,6 +7,7 @@ const enum PopupTypes {
 
 export interface IOption { id: number, title: string; color?: "tomato-red" | "black"; onClick?: () => void }
 
+
 interface IState {
     isOpened: boolean;
     type: PopupTypes | null;

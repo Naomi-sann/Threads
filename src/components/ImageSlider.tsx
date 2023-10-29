@@ -73,7 +73,7 @@ const ImageSlider = ({
       <div
         className={`picture-container w-${
           sliderSize?.size ? `[${sliderSize.size}]` : "fullThread"
-        } select-none overflow-x-scroll snap-x snap-proximity`}
+        } select-none overflow-x-scroll snap-x snap-proximity py-[1px]`}
         ref={refSlider}
         onScroll={device === "desktop" ? handleScroll : undefined}>
         <div className="flex w-fit h-fit gap-2 pl-[calc(5.5rem+12px)]">
@@ -83,7 +83,7 @@ const ImageSlider = ({
                 <img
                   src={pic}
                   alt="content_picture"
-                  className={`thread-picture rounded-xl transition-transform ease-linear duration-100 active:scale-[.98] max-h-[460px] cursor-pointer ${
+                  className={`thread-picture outline-1 outline-[rgba(0,0,0,.15)] outline rounded-xl transition-transform ease-linear duration-100 active:scale-[.98] max-h-[460px] cursor-pointer ${
                     openedImageSrc === pic ? "opacity-0" : ""
                   }`}
                   draggable="false"

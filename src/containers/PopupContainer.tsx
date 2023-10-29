@@ -43,7 +43,7 @@ function PopupContainer({
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLDivElement;
 
-    /* avoid click on navbar code should be written */
+    if (!target.contains(refPopupContainer.current)) return;
 
     closeOnClick &&
       handleClose({

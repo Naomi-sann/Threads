@@ -6,7 +6,7 @@ const Stats = ({
   rightStat: string;
 }) => {
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex items-center">
       <span>{leftStat}</span>
       <svg
         width="20"
